@@ -57,6 +57,8 @@ The Test tab has fields for the **student's name** and **class** (stored locally
 
 **Printable worksheets (no devices needed).** In the Test settings, **📄 Worksheet as PDF** generates a print-ready worksheet using the chosen count, difficulty and question type — with writing space for each task — plus a **separate answer key** on the last page. Each click produces a fresh randomised set.
 
+The **Word problems** setting (Off / Some / Many) lets the teacher decide how many real-world context tasks are mixed in — it applies to both the live test and the generated worksheet (also via `?story=off|mix|many`).
+
 > A sphere, by the way, has no real net; see the note in the Net tab.
 
 **Analysing results (Python / pandas)** — put all JSON files in one folder:
@@ -134,6 +136,8 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 Im Test-Tab gibt es Felder für **Name** der Schüler:in und **Klasse** (werden lokal im Browser gemerkt). Am Ende des Tests auf **📄 Als PDF speichern** klicken — ein sauberes Protokoll (Name, Klasse, Punkte, Aufgabenübersicht) wird heruntergeladen. Optional exportiert **Daten als JSON** dieselben Ergebnisse maschinenlesbar zur Auswertung.
 
 **Druckbare Arbeitsblätter (ganz ohne Geräte).** In den Test-Einstellungen erzeugt **📄 Arbeitsblatt als PDF** ein druckfertiges Arbeitsblatt mit der gewählten Anzahl, Schwierigkeit und Frageart — mit Schreibplatz pro Aufgabe — plus **separatem Lösungsblatt** auf der letzten Seite. Jeder Klick erzeugt einen neuen, zufälligen Satz.
+
+Über **Textaufgaben** (Aus / Einstreuen / Viele) entscheidet die Lehrkraft, wie viele Sachaufgaben mit Realbezug eingemischt werden — das gilt für den Live-Test **und** das erzeugte Arbeitsblatt (auch per `?story=off|mix|many`).
 
 > Eine Kugel hat übrigens kein echtes Netz; siehe Hinweis im Netz-Tab.
 

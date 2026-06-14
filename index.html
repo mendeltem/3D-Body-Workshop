@@ -378,6 +378,8 @@
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qModeRow"></div>
         <div class="sec-lbl" data-i18n="asked_label">Gefragt wird nach</div>
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qaskRow"></div>
+        <div class="sec-lbl" data-i18n="story_label">Textaufgaben (Sachbezug)</div>
+        <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qStoryRow"></div>
         <div class="sec-lbl" data-i18n="help_label">Lösungshilfe</div>
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qHelpModeRow"></div>
         <div class="divider"></div>
@@ -446,7 +448,7 @@ const T={
    tg_edges:'Kanten',tg_solid:'Gefüllt',tg_grid:'Boden',tg_labels:'Maße',tg_axes:'Achsen',tg_ref:'Vergleich',ref_pick:'Vergleichsobjekte (mehrere möglich)',section_tg:'Querschnitt',section_height:'Höhe der Schnittebene',fill_layers:'Schichten',
    net_hint:'<b>So geht\u2019s:</b> Körper wählen, <b>Auffalten</b> drücken und dann jede Fläche antippen – ihre Flächeninhalte addieren sich zur gesamten Oberfläche <b>O</b>.',
    solid_label:'Körper',sel_area:'Markierte Fläche',btn_unfold:'▶ Auffalten',btn_all:'Alle Flächen',btn_reset:'Zurücksetzen',dims_label:'Maße',
-   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',ws_label:'Für Lehrkräfte',ws_btn:'📄 Arbeitsblatt als PDF',ws_info:'Erzeugt ein druckbares Arbeitsblatt mit den oben gewählten Einstellungen (Anzahl, Schwierigkeit, Frageart) plus separatem Lösungsblatt – ganz ohne Geräte für die Klasse.',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
+   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',story_label:'Textaufgaben (Sachbezug)',story_off:'Aus',story_mix:'Einstreuen',story_many:'Viele',ws_label:'Für Lehrkräfte',ws_btn:'📄 Arbeitsblatt als PDF',ws_info:'Erzeugt ein druckbares Arbeitsblatt mit den oben gewählten Einstellungen (Anzahl, Schwierigkeit, Frageart) plus separatem Lösungsblatt – ganz ohne Geräte für die Klasse.',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
    ov_vol:'Volumen V',ov_area:'Oberfläche O',ov_sec:'Querschnitt',hud:'Ziehen · drehen | Scrollen · zoomen',welcome:'← Wähle links einen Körper aus' },
  en:{ brand:'Solids·Workshop',
    tab_explore:'Explore',tab_explore_sub:'build & measure',tab_net:'Net & Area',tab_net_sub:'unfold',tab_quiz:'Test',tab_quiz_sub:'questions',
@@ -455,7 +457,7 @@ const T={
    tg_edges:'Edges',tg_solid:'Filled',tg_grid:'Floor',tg_labels:'Labels',tg_axes:'Axes',tg_ref:'Reference',ref_pick:'Reference objects (pick several)',section_tg:'Cross-section',section_height:'Cutting-plane height',fill_layers:'Layers',
    net_hint:'<b>How it works:</b> pick a solid, press <b>Unfold</b>, then tap each face – their areas add up to the total surface area <b>O</b>.',
    solid_label:'Solid',sel_area:'Selected area',btn_unfold:'▶ Unfold',btn_all:'All faces',btn_reset:'Reset',dims_label:'Dimensions',
-   asked_label:'Asked for',help_label:'Solution help',ws_label:'For teachers',ws_btn:'📄 Worksheet as PDF',ws_info:'Generates a printable worksheet using the settings above (count, difficulty, question type) plus a separate answer key – no devices needed for the class.',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
+   asked_label:'Asked for',help_label:'Solution help',story_label:'Word problems',story_off:'Off',story_mix:'Some',story_many:'Many',ws_label:'For teachers',ws_btn:'📄 Worksheet as PDF',ws_info:'Generates a printable worksheet using the settings above (count, difficulty, question type) plus a separate answer key – no devices needed for the class.',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
    ov_vol:'Volume V',ov_area:'Surface O',ov_sec:'Cross-section',hud:'Drag · rotate | Scroll · zoom',welcome:'← Pick a solid on the left' }
 };
 
@@ -959,7 +961,8 @@ function setNetSolid(t){netSel=t;netDims=defaultDims(t);renderNetLib();renderNet
 /* ================= TEST ================= */
 const test={active:false,idx:0,total:30,right:0,wrong:0,finished:false,checked:false,results:[],score:0,streak:0,bestStreak:0,adaptiveLevel:1};
 const quiz={};
-let askSetting='rand',diffMode='rising',chosenCount=10,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,helpAllowed=true,classCode='';
+let askSetting='rand',diffMode='rising',chosenCount=10,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,helpAllowed=true,classCode='',storyMode='mix';
+function storyProb(){return storyMode==='off'?0:storyMode==='many'?0.8:0.4;}
 let qTimerId=null,qStart=0,qLimit=30,qTimedOut=false;
 
 function setQuizSolid(type,dims){while(groupQuiz.children.length){const o=groupQuiz.children.pop();o.traverse(c=>{if(c.geometry)c.geometry.dispose();if(c.material&&c.material.dispose)c.material.dispose();});}const m=makeSolidMeshes(type,dims);groupQuiz.add(m.obj);frameObject(m.size,m.height);}
@@ -1011,7 +1014,7 @@ function newQuestion(){
   else kind='forward';
   if(kind==='forward'){
     quiz.kind='forward';quiz.ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting;quiz.correct=quiz.ask==='V'?r.vol.val:r.area.val;
-    const cx=CONTEXT[type]&&CONTEXT[type][quiz.ask];if(cx&&lvl>=1&&Math.random()<0.4)quiz.story=cx[lang];
+    const cx=CONTEXT[type]&&CONTEXT[type][quiz.ask];if(cx&&lvl>=1&&Math.random()<storyProb())quiz.story=cx[lang];
   } else if(kind==='reverse'){
     quiz.kind='reverse';quiz.measure='V';quiz.measureVal=r.vol.val;const keys=SOLIDS[type].dims.map(d=>d.k);quiz.unknown=keys[Math.floor(Math.random()*keys.length)];quiz.correct=dims[quiz.unknown];
   } else {
@@ -1229,6 +1232,7 @@ function parseParams(){
   const c=parseInt(g('count'),10);if([5,10,15,20,25].indexOf(c)>=0)chosenCount=c;
   if(g('help')==='0')helpAllowed=false;
   const a=g('ask');if(['rand','V','O'].indexOf(a)>=0)askSetting=a;
+  const sm=g('story');if(['off','mix','many'].indexOf(sm)>=0)storyMode=sm;
   const cl=g('class');if(cl)classCode=cl.slice(0,40);
   const un=g('unit');if(['mm','cm','dm','m'].indexOf(un)>=0)unitSys=un;
   if(g('exam')==='1'){examMode=true;practiceMode=false;}
@@ -1246,6 +1250,7 @@ function renderDiffRow(){
   $('#qModeRow').innerHTML=md.map(o=>`<button data-diff="${o[0]}" class="${o[0]===diffMode?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');
 }
 function renderAskRow(){const opts=[['rand',D('gemischt','mixed')],['V',D('nur V','V only')],['O',D('nur O','O only')]];$('#qaskRow').innerHTML=opts.map(o=>`<button data-ask="${o[0]}" class="${o[0]===askSetting?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
+function renderStoryRow(){const opts=[['off',D('Aus','Off')],['mix',D('Einstreuen','Some')],['many',D('Viele','Many')]];const el=$('#qStoryRow');if(el)el.innerHTML=opts.map(o=>`<button data-story="${o[0]}" class="${o[0]===storyMode?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
 function renderHelpRow(){const opts=[[true,D('💡 Hilfe erlaubt','💡 Help allowed')],[false,D('🏆 Herausforderung','🏆 Challenge')]];$('#qHelpModeRow').innerHTML=opts.map(o=>`<button data-help="${o[0]}" class="${o[0]===helpAllowed?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
 
 /* ---------- export ---------- */
@@ -1312,7 +1317,7 @@ function wsGenerate(n){
     let prompt,answer,tag='';
     if(kind==='forward'){
       const ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting,correct=ask==='V'?r.vol.val:r.area.val;
-      const cx=CONTEXT[type]&&CONTEXT[type][ask],story=(cx&&lvl>=1&&Math.random()<0.4)?cx[lang]:null;
+      const cx=CONTEXT[type]&&CONTEXT[type][ask],story=(cx&&lvl>=1&&Math.random()<storyProb())?cx[lang]:null;
       const instr=ask==='V'?D('Berechne das Volumen V.','Calculate the volume V.'):D('Berechne die Oberfläche O.','Calculate the surface area O.');
       prompt=`${name}: ${dimStr}. ${story?story+' ':''}${instr}`;answer=fmt(correct)+' '+(ask==='V'?UV():UA());if(story)tag=D('(Sachaufgabe)','(word problem)');
     } else if(kind==='reverse'){
@@ -1381,7 +1386,7 @@ function setAppMode(m){
   if(m==='net'){ensureNet();}
   if(m==='quiz'){if(!test.active){startTest();}else{if(test.finished){renderResults();}else{setQuizSolid(quiz.type,quiz.dims);renderQuiz();if(!test.checked)startTimer();}renderTestHeader();}}
 }
-function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();renderHelpRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
+function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
 function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');renderFooter();refreshAll();updateSection();updateRefUI();setToolsHdr();if(cpa.on)renderCPA();}
 function setUnit(u){unitSys=u;document.querySelectorAll('[data-unit]').forEach(b=>b.classList.toggle('active',b.dataset.unit===u));refreshAll();updateSection();if(appMode==='explore')layout();else{buildAxes();buildRef();}updateRefUI();}
 const SOURCES=[
@@ -1449,6 +1454,7 @@ $('#qCountRow').addEventListener('click',safe(e=>{const b=e.target.closest('[dat
 $('#qDiffRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qaskRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-ask]');if(!b)return;askSetting=b.dataset.ask;focusSolids=null;renderAskRow();startTest();}));
+$('#qStoryRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-story]');if(!b)return;storyMode=b.dataset.story;focusSolids=null;renderStoryRow();startTest();}));
 $('#qHelpModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-help]');if(!b)return;helpAllowed=b.dataset.help==='true';focusSolids=null;renderHelpRow();startTest();}));
 $('#qCheck').addEventListener('click',safe(checkAnswer));
 $('#qHintBtn').addEventListener('click',safe(useHint));
@@ -1465,7 +1471,7 @@ $('#unitSeg').addEventListener('click',safe(e=>{const b=e.target.closest('[data-
 $('#srcToggle').addEventListener('click',safe(()=>{$('#sources').classList.toggle('show');renderFooter();}));
 
 /* boot */
-try{ parseParams();renderLib();renderChips();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();renderHelpRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const cl=$('#clsName');if(cl){cl.value=classCode||lsGet('kw_class')||'';cl.addEventListener('input',()=>lsSet('kw_class',cl.value));}})();applyLang(lang);setUnit(unitSys);applyExamUI();setAppMode('explore'); }catch(err){ showFatal(err); }
+try{ parseParams();renderLib();renderChips();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const cl=$('#clsName');if(cl){cl.value=classCode||lsGet('kw_class')||'';cl.addEventListener('input',()=>lsSet('kw_class',cl.value));}})();applyLang(lang);setUnit(unitSys);applyExamUI();setAppMode('explore'); }catch(err){ showFatal(err); }
 })();
 </script>
 </body>
