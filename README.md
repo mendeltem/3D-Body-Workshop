@@ -29,6 +29,32 @@ Everything lives in **a single HTML file**: no server, no build, no install. Wor
 
 ---
 
+## ⭐ Why this tool / Warum dieses Tool
+
+**EN:** It bundles the full loop — **explore → understand → practise → assess → hand out a worksheet** — into a single offline HTML file. No other free tool I'm aware of combines an interactive 3D builder, animated nets, a diagnostic quiz *and* a one-click worksheet generator with answer key in one place that also survives locked-down school networks.
+
+**DE:** Es bündelt den ganzen Kreislauf — **entdecken → verstehen → üben → prüfen → Arbeitsblatt austeilen** — in einer einzigen Offline-HTML-Datei. Kein anderes freies Tool, das ich kenne, vereint interaktiven 3D-Baukasten, animierte Netze, ein diagnostisches Quiz *und* einen Ein-Klick-Arbeitsblatt-Generator mit Lösungsblatt an einem Ort, der zudem in abgeschotteten Schulnetzen läuft.
+
+### What it does well / Was es gut kann
+
+- **EN:** Print-ready worksheets **with a separate answer key** in one click, differentiated by grade, difficulty and question type. · **DE:** Druckfertige Arbeitsblätter **mit separatem Lösungsblatt** auf einen Klick, differenziert nach Jahrgang, Schwierigkeit und Aufgabentyp.
+- **EN:** Runs offline, no server / login / install — one HTML file, GDPR-friendly (all data stays local). · **DE:** Läuft offline, ohne Server / Login / Installation — eine HTML-Datei, DSGVO-freundlich (alle Daten bleiben lokal).
+- **EN:** Diagnostic feedback names the *misconception*, not just "wrong". · **DE:** Diagnostisches Feedback benennt die *Fehlvorstellung*, nicht nur „falsch".
+- **EN:** Same start for the whole class via one link / QR code, plus a locked exam mode. · **DE:** Gleicher Start für die ganze Klasse per Link / QR-Code, plus gesperrter Prüfungsmodus.
+- **EN:** Linked representations (3D solid, net, formula, cross-section) and research-backed didactics. · **DE:** Verknüpfte Darstellungen (3D-Körper, Netz, Formel, Querschnitt) und forschungsgestützte Didaktik.
+
+### What it can't (yet) do / Was es (noch) nicht kann
+
+- **EN:** **No grade syncing or accounts** — results live in the browser's local storage only; clearing the browser or switching devices loses them. · **DE:** **Keine Noten-Synchronisierung, keine Konten** — Ergebnisse liegen nur im lokalen Browser-Speicher; Browser leeren oder Gerät wechseln löscht sie.
+- **EN:** The **grade→solid mapping is a common default**, not tied to any specific state syllabus — check it against yours. · **DE:** Die **Jahrgangs-Zuordnung ist ein üblicher Standard**, nicht an einen bestimmten Lehrplan gebunden — bitte gegenprüfen.
+- **EN:** **Diagnostic feedback catches common mistakes, not every arithmetic slip.** · **DE:** **Das diagnostische Feedback fängt häufige Fehler ab, nicht jeden Rechenfehler.**
+- **EN:** A **sphere has no flat net** — the great circles shown are a magnitude aid, not an unfoldable net. · **DE:** Eine **Kugel hat kein ebenes Netz** — die gezeigten Großkreise sind eine Merkhilfe, kein auffaltbares Netz.
+- **EN:** Limited solid library (cube, cuboid, prism, cylinder, pyramid, cone, sphere) — no composite-solid builder beyond combining, no platonic solids, no truncations. · **DE:** Begrenzte Körper-Bibliothek (Würfel, Quader, Prisma, Zylinder, Pyramide, Kegel, Kugel) — kein Baukasten für zusammengesetzte Körper über das Kombinieren hinaus, keine platonischen Körper, keine Stümpfe.
+- **EN:** **No live class dashboard** — you collect PDFs/JSON manually and analyse them yourself. · **DE:** **Kein Live-Klassen-Dashboard** — PDFs/JSON werden manuell gesammelt und selbst ausgewertet.
+- **EN:** Not curriculum-certified, not classroom-tested at scale yet, single maintainer. · **DE:** Nicht lehrplan-zertifiziert, noch nicht im großen Stil im Unterricht erprobt, ein einzelner Maintainer.
+
+---
+
 ## 🇬🇧 English
 
 ### Overview
@@ -222,4 +248,7 @@ Ideas, bugs or suggestions via [Issues](../../issues) or directly:
 
 ## 📄 License / Lizenz
 
-To be decided — **MIT** recommended (free for educational use). *Noch festzulegen — MIT empfohlen (frei für den Bildungseinsatz).*
+**MIT License** — free for everyone, for any purpose (educational, private or commercial): use, modify and share, as long as the copyright notice stays. See the [`LICENSE`](LICENSE) file.
+*MIT-Lizenz — kostenlos für alle, für jeden Zweck (Bildung, privat oder kommerziell): nutzen, ändern und weitergeben, solange der Copyright-Hinweis erhalten bleibt. Siehe die Datei [`LICENSE`](LICENSE).*
+
+> The bundled libraries keep their own licenses (Three.js — MIT, jsPDF — MIT). *Die mitgelieferten Bibliotheken behalten ihre eigenen Lizenzen (Three.js — MIT, jsPDF — MIT).*
