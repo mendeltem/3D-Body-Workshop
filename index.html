@@ -12,7 +12,7 @@
     --ink:#0a0c12; --panel:#11141d; --panel-2:#171b27; --panel-3:#1f2433;
     --line:rgba(255,255,255,0.07); --line-strong:rgba(255,255,255,0.15);
     --text:#e8eaf0; --muted:#828ba0; --muted-2:#5b6379;
-    --violet:#8b7bff; --violet-dim:#6b5fd0; --amber:#ffc861; --teal:#36d6c3; --rose:#ff7a92; --sky:#5f9bff; --green:#5fe08a;
+    --violet:#8b7bff; --violet-dim:#6b5fd0; --amber:#ffc861; --teal:#36d6c3; --rose:#ff7a92;  --green:#5fe08a;
     --shadow:0 14px 40px rgba(0,0,0,0.45);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -446,21 +446,21 @@ const UL=()=>unitSys==='mm'?'mm':unitSys==='dm'?'dm':unitSys==='m'?'m':'cm';
 const T={
  de:{ brand:'Körper·Werkstatt',
    tab_explore:'Entdecken',tab_explore_sub:'bauen & messen',tab_net:'Netz & Fläche',tab_net_sub:'aufklappen',tab_quiz:'Test',tab_quiz_sub:'Aufgaben',
-   unit_label:'Einheit',diff_label:'Schwierigkeit',grade_label:'Jahrgang (Lehrplan)',region_label:'Schulform',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse',name_lbl:'Name / Kürzel der Schüler:in',cls_lbl:'Klasse / Kurs',mail_lbl:'E-Mail der Lehrkraft',share_btn:'🔗 Aufgabe als Link teilen',dsgvo:'Datenschutz: Bitte nur Kürzel/Pseudonyme verwenden. Alle Eingaben bleiben lokal auf diesem Gerät und werden nicht automatisch übertragen.',exam_banner:'<b>Prüfungsmodus aktiv:</b> Einstellungen gesperrt, keine Tipps und keine Lösung. Ein Versuch pro Aufgabe.',
+   unit_label:'Einheit',diff_label:'Schwierigkeit',grade_label:'Jahrgang (Lehrplan)',region_label:'Schulform',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse',name_lbl:'Name / Kürzel der Schüler:in',cls_lbl:'Klasse / Kurs',dsgvo:'Datenschutz: Bitte nur Kürzel/Pseudonyme verwenden. Alle Eingaben bleiben lokal auf diesem Gerät und werden nicht automatisch übertragen.',exam_banner:'<b>Prüfungsmodus aktiv:</b> Einstellungen gesperrt, keine Tipps und keine Lösung. Ein Versuch pro Aufgabe.',
    lib_label:'Bibliothek · anklicken zum Hinzufügen',scene_label:'Im 3D-Raum',empty_hint:'Noch keine Körper hinzugefügt.',display_label:'Darstellung',
    tg_edges:'Kanten',tg_solid:'Gefüllt',tg_grid:'Boden',tg_labels:'Maße',tg_axes:'Achsen',tg_ref:'Vergleich',ref_pick:'Vergleichsobjekte (mehrere möglich)',section_tg:'Querschnitt',section_height:'Höhe der Schnittebene',fill_layers:'Schichten',
    net_hint:'<b>So geht\u2019s:</b> Körper wählen, <b>Auffalten</b> drücken und dann jede Fläche antippen – ihre Flächeninhalte addieren sich zur gesamten Oberfläche <b>O</b>.',
    solid_label:'Körper',sel_area:'Markierte Fläche',btn_unfold:'▶ Auffalten',btn_all:'Alle Flächen',btn_reset:'Zurücksetzen',dims_label:'Maße',
-   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',story_label:'Textaufgaben (Sachbezug)',story_off:'Aus',story_mix:'Einstreuen',story_many:'Viele',ws_label:'Für Lehrkräfte',ws_btn:'📄 Arbeitsblatt als PDF',ws_info:'Erzeugt ein druckbares Arbeitsblatt mit den oben gewählten Einstellungen (Anzahl, Schwierigkeit, Frageart) plus separatem Lösungsblatt – ganz ohne Geräte für die Klasse.',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
+   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',story_label:'Textaufgaben (Sachbezug)',ws_label:'Für Lehrkräfte',ws_btn:'📄 Arbeitsblatt als PDF',ws_info:'Erzeugt ein druckbares Arbeitsblatt mit den oben gewählten Einstellungen (Anzahl, Schwierigkeit, Frageart) plus separatem Lösungsblatt – ganz ohne Geräte für die Klasse.',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
    ov_vol:'Volumen V',ov_area:'Oberfläche O',ov_sec:'Querschnitt',hud:'Ziehen · drehen | Scrollen · zoomen',welcome:'← Wähle links einen Körper aus' },
  en:{ brand:'Solids·Workshop',
    tab_explore:'Explore',tab_explore_sub:'build & measure',tab_net:'Net & Area',tab_net_sub:'unfold',tab_quiz:'Test',tab_quiz_sub:'questions',
-   unit_label:'Units',diff_label:'Difficulty',grade_label:'Grade (curriculum)',region_label:'School type',count_label:'Number of questions',mode_label:'Mode',class_label:'Class',name_lbl:'Student name / initials',cls_lbl:'Class / course',mail_lbl:'Teacher e-mail',share_btn:'🔗 Share task as a link',dsgvo:'Privacy: please use initials / pseudonyms only. All entries stay locally on this device and are not transmitted automatically.',exam_banner:'<b>Exam mode active:</b> settings locked, no hints and no solution. One attempt per question.',
+   unit_label:'Units',diff_label:'Difficulty',grade_label:'Grade (curriculum)',region_label:'School type',count_label:'Number of questions',mode_label:'Mode',class_label:'Class',name_lbl:'Student name / initials',cls_lbl:'Class / course',dsgvo:'Privacy: please use initials / pseudonyms only. All entries stay locally on this device and are not transmitted automatically.',exam_banner:'<b>Exam mode active:</b> settings locked, no hints and no solution. One attempt per question.',
    lib_label:'Library · tap to add',scene_label:'In the 3D scene',empty_hint:'No solids added yet.',display_label:'Display',
    tg_edges:'Edges',tg_solid:'Filled',tg_grid:'Floor',tg_labels:'Labels',tg_axes:'Axes',tg_ref:'Reference',ref_pick:'Reference objects (pick several)',section_tg:'Cross-section',section_height:'Cutting-plane height',fill_layers:'Layers',
    net_hint:'<b>How it works:</b> pick a solid, press <b>Unfold</b>, then tap each face – their areas add up to the total surface area <b>O</b>.',
    solid_label:'Solid',sel_area:'Selected area',btn_unfold:'▶ Unfold',btn_all:'All faces',btn_reset:'Reset',dims_label:'Dimensions',
-   asked_label:'Asked for',help_label:'Solution help',story_label:'Word problems',story_off:'Off',story_mix:'Some',story_many:'Many',ws_label:'For teachers',ws_btn:'📄 Worksheet as PDF',ws_info:'Generates a printable worksheet using the settings above (count, difficulty, question type) plus a separate answer key – no devices needed for the class.',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
+   asked_label:'Asked for',help_label:'Solution help',story_label:'Word problems',ws_label:'For teachers',ws_btn:'📄 Worksheet as PDF',ws_info:'Generates a printable worksheet using the settings above (count, difficulty, question type) plus a separate answer key – no devices needed for the class.',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
    ov_vol:'Volume V',ov_area:'Surface O',ov_sec:'Cross-section',hud:'Drag · rotate | Scroll · zoom',welcome:'← Pick a solid on the left' }
 };
 
@@ -962,7 +962,7 @@ function cpaEnd(){cpa.on=false;fill.on=false;buildFill();$('#cpaBar').style.disp
 function setNetSolid(t){netSel=t;netDims=defaultDims(t);renderNetLib();renderNetDims();drawNet();}
 
 /* ================= TEST ================= */
-const test={active:false,idx:0,total:30,right:0,wrong:0,finished:false,checked:false,results:[],score:0,streak:0,bestStreak:0,adaptiveLevel:1};
+const test={active:false,idx:0,total:30,right:0,wrong:0,finished:false,checked:false,results:[],score:0,streak:0,bestStreak:0};
 const quiz={};
 let askSetting='rand',diffMode='2',gradeSel='g10',schulformSel='gym',chosenCount=10,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,helpAllowed=true,classCode='',storyMode='mix';
 function storyProb(){return storyMode==='off'?0:storyMode==='many'?0.8:0.4;}
@@ -986,8 +986,6 @@ const LINREV={quader:['a','b','c'],prisma:['h'],zylinder:['h'],pyramide:['h'],ke
 function curDiff(){const n=parseInt(diffMode,10);return(n>=1&&n<=3)?n:2;}
 function diffLabel(n){return n===1?D('leicht','easy'):n===3?D('schwer','hard'):D('mittel','medium');}
 function setQuizSolid(type,dims){while(groupQuiz.children.length){const o=groupQuiz.children.pop();o.traverse(c=>{if(c.geometry)c.geometry.dispose();if(c.material&&c.material.dispose)c.material.dispose();});}const m=makeSolidMeshes(type,dims);groupQuiz.add(m.obj);frameObject(m.size,m.height);}
-function solidsForLevel(l){return gradeSolids();}
-function levelForIndex(i){return curDiff();}
 function tolForLevel(l){return l===1?0.02:l===2?0.01:0.005;}
 function randDimByLevel(dim,l){const step=l===1?1:l===2?0.5:0.25;let lo=dim.min,hi=dim.max;if(l===1){lo=Math.max(1,Math.ceil(dim.min));hi=Math.floor(dim.max);if(hi<lo)hi=lo;}const vals=[];for(let v=Math.ceil(lo/step)*step;v<=hi+1e-9;v+=step)vals.push(Math.round(v*1000)/1000);let pool=vals;if(l===3){const f=vals.filter(v=>v>=lo+(hi-lo)*0.35);if(f.length)pool=f;}return pool.length?pool[Math.floor(Math.random()*pool.length)]:lo;}
 function timeLimitFor(q){return(120+q.level*30)+(q.kind==='reverse'?30:0)+(q.kind==='convert'?20:0);}
@@ -1053,7 +1051,7 @@ function stopTimer(){if(qTimerId){clearInterval(qTimerId);qTimerId=null;}}
 function elapsed(){return(performance.now()-qStart)/1000;}
 function startTimer(){stopTimer();if(practiceMode)return;qTimedOut=false;qStart=performance.now();qTimerId=setInterval(safe(tickTimer),100);tickTimer();}
 function tickTimer(){const bar=$('#qTimeBar');if(!bar)return;const rem=Math.max(0,qLimit-elapsed()),frac=qLimit>0?rem/qLimit:0;bar.style.width=(frac*100)+'%';bar.style.background=frac<0.25?'var(--rose)':frac<0.5?'var(--amber)':'linear-gradient(90deg,var(--violet),var(--teal))';const t=$('#qTimeNum');if(t)t.textContent=Math.ceil(rem)+'s';if(rem<=0&&!test.checked&&!qTimedOut){qTimedOut=true;onTimeout();}}
-function onTimeout(){stopTimer();test.checked=true;quiz.recorded=true;test.wrong++;test.streak=0;if(diffMode==='adaptive')test.adaptiveLevel=Math.max(1,test.adaptiveLevel-0.7);recordResult(false,null,0);const inp=$('#qAns');if(inp)inp.setAttribute('disabled','');const hb=$('#qHintBtn');if(hb)hb.disabled=true;const feed=$('#qFeed');if(feed){feed.textContent='⏱ '+D('Zeit abgelaufen. Richtig: ','Time up. Correct: ')+correctText();feed.className='qfeed no';}renderTestHeader();}
+function onTimeout(){stopTimer();test.checked=true;quiz.recorded=true;test.wrong++;test.streak=0;recordResult(false,null,0);const inp=$('#qAns');if(inp)inp.setAttribute('disabled','');const hb=$('#qHintBtn');if(hb)hb.disabled=true;const feed=$('#qFeed');if(feed){feed.textContent='⏱ '+D('Zeit abgelaufen. Richtig: ','Time up. Correct: ')+correctText();feed.className='qfeed no';}renderTestHeader();}
 
 function resetQ(){quiz.solved=false;quiz.recorded=false;quiz.attempts=0;quiz.lastAns=null;quiz.hintStage=0;quiz.hintUsed=false;}
 function loadSnapshot(s){
@@ -1235,7 +1233,7 @@ function checkAnswer(){
   quiz.lastAns=v;
   if(ok){
     quiz.solved=true;test.checked=true;stopTimer();inp.setAttribute('disabled','');const hb=$('#qHintBtn');if(hb)hb.disabled=true;
-    if(!quiz.recorded){test.right++;test.streak++;if(test.streak>test.bestStreak)test.bestStreak=test.streak;if(diffMode==='adaptive')test.adaptiveLevel=Math.min(3,test.adaptiveLevel+0.5);const pts=awardPoints();test.score+=pts;recordResult(true,v,pts);quiz.recorded=true;feed.innerHTML='✓ '+D('Richtig! ','Correct! ')+correctText()+`  <span class="pts">+${pts}</span>`+(test.streak>=2&&!practiceMode?'  🔥 '+test.streak:'');}
+    if(!quiz.recorded){test.right++;test.streak++;if(test.streak>test.bestStreak)test.bestStreak=test.streak;const pts=awardPoints();test.score+=pts;recordResult(true,v,pts);quiz.recorded=true;feed.innerHTML='✓ '+D('Richtig! ','Correct! ')+correctText()+`  <span class="pts">+${pts}</span>`+(test.streak>=2&&!practiceMode?'  🔥 '+test.streak:'');}
     else{feed.innerHTML='✓ '+D('Richtig! ','Correct! ')+correctText();}
     feed.className='qfeed ok';renderTestHeader();return;
   }
@@ -1246,7 +1244,7 @@ function checkAnswer(){
     feed.className='qfeed no';inp.focus();inp.select();renderTestHeader();return;
   }
   test.checked=true;stopTimer();inp.setAttribute('disabled','');const hb=$('#qHintBtn');if(hb)hb.disabled=true;
-  if(!quiz.recorded){test.wrong++;test.streak=0;if(diffMode==='adaptive')test.adaptiveLevel=Math.max(1,test.adaptiveLevel-0.7);recordResult(false,v,0);quiz.recorded=true;}
+  if(!quiz.recorded){test.wrong++;test.streak=0;recordResult(false,v,0);quiz.recorded=true;}
   const challenge=!practiceMode&&(examMode||!helpAllowed);
   feed.innerHTML='✗ '+D('Leider falsch. Richtig: ','Wrong. Correct: ')+correctText()+dmsg+(challenge?'<br><span style="color:var(--muted)">'+D('weiter …','next …')+'</span>':'');
   feed.className='qfeed no';renderTestHeader();
@@ -1254,11 +1252,11 @@ function checkAnswer(){
 }
 function showQuizSolution(){if(!quiz.type)return;$('#qSolBox').innerHTML=buildSteps();}
 let autoNextTimer=null;
-function nextQuestion(){clearTimeout(autoNextTimer);autoNextTimer=null;if(test.finished)return;if(!quiz.recorded){stopTimer();test.wrong++;test.streak=0;if(diffMode==='adaptive')test.adaptiveLevel=Math.max(1,test.adaptiveLevel-0.7);recordResult(false,quiz.lastAns!=null?quiz.lastAns:null,0);quiz.recorded=true;}test.idx++;if(test.idx>=test.total)finishTest();else{newQuestion();renderTestHeader();}}
+function nextQuestion(){clearTimeout(autoNextTimer);autoNextTimer=null;if(test.finished)return;if(!quiz.recorded){stopTimer();test.wrong++;test.streak=0;recordResult(false,quiz.lastAns!=null?quiz.lastAns:null,0);quiz.recorded=true;}test.idx++;if(test.idx>=test.total)finishTest();else{newQuestion();renderTestHeader();}}
 function startTest(queue){
   clearTimeout(autoNextTimer);autoNextTimer=null;
   questionQueue=queue||null;test.total=questionQueue?questionQueue.length:chosenCount;
-  test.active=true;test.idx=0;test.right=0;test.wrong=0;test.finished=false;test.checked=false;test.results=[];test.score=0;test.streak=0;test.bestStreak=0;test.adaptiveLevel=1;
+  test.active=true;test.idx=0;test.right=0;test.wrong=0;test.finished=false;test.checked=false;test.results=[];test.score=0;test.streak=0;test.bestStreak=0;
   $('#testPlay').style.display='block';$('#testResults').style.display='none';$('#testResults').innerHTML='';
   newQuestion();renderTestHeader();
 }
