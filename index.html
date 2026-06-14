@@ -312,7 +312,9 @@
             <div class="refchips" id="refChips"></div>
             <div class="hint-box" id="refInfo" style="margin-top:8px;margin-bottom:0"></div>
           </div>
-          <div id="ovrCtl" style="margin-top:14px">
+          <button class="btn" id="toolsHdr" style="margin-top:14px;display:none"></button>
+          <div id="toolsBox" style="display:none">
+          <div id="ovrCtl" style="margin-top:12px">
             <button class="btn" id="ovrBtn"></button>
             <div id="ovrBox" style="display:none;margin-top:10px">
               <div class="dim"><div class="top"><label data-i18n="ovr_size">Größe ×</label><span id="ovrReadout" class="num" style="cursor:default;color:var(--amber)">×1</span></div><input type="range" id="ovrSlider" min="0.25" max="3" step="0.05" value="1"></div>
@@ -321,7 +323,7 @@
               <div class="hint-box" id="ovrInfo" style="margin-top:8px;margin-bottom:0"></div>
             </div>
           </div>
-          <div id="wpCtl" style="margin-top:14px">
+          <div id="wpCtl" style="margin-top:12px">
             <button class="btn" id="wpBtn"></button>
             <div id="wpBox" style="display:none;margin-top:10px">
               <div class="refchips" id="wpDims" style="margin-bottom:8px"></div>
@@ -329,6 +331,7 @@
               <div class="lib" id="wpOpts" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:8px"></div>
               <div class="qfeed" id="wpFeed"></div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -377,6 +380,10 @@
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qaskRow"></div>
         <div class="sec-lbl" data-i18n="help_label">Lösungshilfe</div>
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qHelpModeRow"></div>
+        <div class="divider"></div>
+        <div class="sec-lbl" data-i18n="ws_label">Für Lehrkräfte</div>
+        <button class="btn" id="qWorksheet" data-i18n="ws_btn" style="margin-bottom:8px">📄 Arbeitsblatt als PDF</button>
+        <div class="hint-box" id="qWsInfo" data-i18n="ws_info" style="margin-top:0;margin-bottom:0"></div>
         </div>
         <div class="hint-box" id="examBanner" data-i18n-html="exam_banner" style="display:none"></div>
         <div id="testPlay">
@@ -439,7 +446,7 @@ const T={
    tg_edges:'Kanten',tg_solid:'Gefüllt',tg_grid:'Boden',tg_labels:'Maße',tg_axes:'Achsen',tg_ref:'Vergleich',ref_pick:'Vergleichsobjekte (mehrere möglich)',section_tg:'Querschnitt',section_height:'Höhe der Schnittebene',fill_layers:'Schichten',
    net_hint:'<b>So geht\u2019s:</b> Körper wählen, <b>Auffalten</b> drücken und dann jede Fläche antippen – ihre Flächeninhalte addieren sich zur gesamten Oberfläche <b>O</b>.',
    solid_label:'Körper',sel_area:'Markierte Fläche',btn_unfold:'▶ Auffalten',btn_all:'Alle Flächen',btn_reset:'Zurücksetzen',dims_label:'Maße',
-   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
+   asked_label:'Gefragt wird nach',help_label:'Lösungshilfe',ws_label:'Für Lehrkräfte',ws_btn:'📄 Arbeitsblatt als PDF',ws_info:'Erzeugt ein druckbares Arbeitsblatt mit den oben gewählten Einstellungen (Anzahl, Schwierigkeit, Frageart) plus separatem Lösungsblatt – ganz ohne Geräte für die Klasse.',ovr_size:'Größe ×',cpa_head:'🧭 Lernpfad',cpa_start:'🧭 Lernpfad: Konkret → Bildlich → Abstrakt',btn_check:'Antwort prüfen',btn_sol:'Lösung zeigen',btn_next:'Nächste ▸',
    ov_vol:'Volumen V',ov_area:'Oberfläche O',ov_sec:'Querschnitt',hud:'Ziehen · drehen | Scrollen · zoomen',welcome:'← Wähle links einen Körper aus' },
  en:{ brand:'Solids·Workshop',
    tab_explore:'Explore',tab_explore_sub:'build & measure',tab_net:'Net & Area',tab_net_sub:'unfold',tab_quiz:'Test',tab_quiz_sub:'questions',
@@ -448,7 +455,7 @@ const T={
    tg_edges:'Edges',tg_solid:'Filled',tg_grid:'Floor',tg_labels:'Labels',tg_axes:'Axes',tg_ref:'Reference',ref_pick:'Reference objects (pick several)',section_tg:'Cross-section',section_height:'Cutting-plane height',fill_layers:'Layers',
    net_hint:'<b>How it works:</b> pick a solid, press <b>Unfold</b>, then tap each face – their areas add up to the total surface area <b>O</b>.',
    solid_label:'Solid',sel_area:'Selected area',btn_unfold:'▶ Unfold',btn_all:'All faces',btn_reset:'Reset',dims_label:'Dimensions',
-   asked_label:'Asked for',help_label:'Solution help',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
+   asked_label:'Asked for',help_label:'Solution help',ws_label:'For teachers',ws_btn:'📄 Worksheet as PDF',ws_info:'Generates a printable worksheet using the settings above (count, difficulty, question type) plus a separate answer key – no devices needed for the class.',ovr_size:'Size ×',cpa_head:'🧭 Learning path',cpa_start:'🧭 Learning path: Concrete → Pictorial → Abstract',btn_check:'Check answer',btn_sol:'Show solution',btn_next:'Next ▸',
    ov_vol:'Volume V',ov_area:'Surface O',ov_sec:'Cross-section',hud:'Drag · rotate | Scroll · zoom',welcome:'← Pick a solid on the left' }
 };
 
@@ -607,22 +614,14 @@ function bPerson(g){
 }
 function bRice(g){const m=new THREE.Mesh(new THREE.SphereGeometry(0.001,16,12),_mat(0xefe6c8,0.7));m.scale.set(3,1.1,1.3);m.position.y=0.0013;g.add(m);}
 function bCoin(g){const d=new THREE.Mesh(new THREE.CylinderGeometry(0.0125,0.0125,0.002,40),_mat(0xffc861,0.35));d.rotation.x=Math.PI/2;d.position.y=0.0125;g.add(d);const r=new THREE.Mesh(new THREE.TorusGeometry(0.0108,0.0009,8,40),_mat(0xc99a34,0.4));r.position.y=0.0125;g.add(r);}
-function bBall(g){const m=new THREE.Mesh(new THREE.SphereGeometry(0.0325,24,18),_mat(0xc9e35f,0.5));m.position.y=0.0325;g.add(m);}
-function bBottle(g){const c=_mat(0x4caa6a,0.4);const b=new THREE.Mesh(new THREE.CylinderGeometry(0.035,0.035,0.2,24),c);b.position.y=0.1;g.add(b);const n=new THREE.Mesh(new THREE.CylinderGeometry(0.014,0.022,0.06,20),c);n.position.y=0.23;g.add(n);}
-function bDoor(g){const f=new THREE.Mesh(new THREE.BoxGeometry(0.9,2,0.08),_mat(0x9c6b43,0.7));f.position.y=1;g.add(f);const k=new THREE.Mesh(new THREE.SphereGeometry(0.05,12,10),_mat(0xffc861,0.4));k.position.set(0.33,1,0.06);g.add(k);}
 function bCar(g){const body=new THREE.Mesh(new THREE.BoxGeometry(4.2,0.7,1.8),_mat(0xe2574c,0.5));body.position.y=0.55;g.add(body);const cab=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.6,1.6),_mat(0xb9c4d6,0.4));cab.position.y=1.15;g.add(cab);const wm=_mat(0x222831,0.7);[[-1.3,-0.95],[1.3,-0.95],[-1.3,0.95],[1.3,0.95]].forEach(p=>{const w=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,0.25,18),wm);w.rotation.x=Math.PI/2;w.position.set(p[0],0.4,p[1]);g.add(w);});}
-function bTree(g){const t=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.5,4,14),_mat(0x8a5a3b,0.8));t.position.y=2;g.add(t);const c=_mat(0x4f9e54,0.7);[[0,6.5,2.6],[-1.6,5.3,2],[1.6,5.4,2.1]].forEach(p=>{const s=new THREE.Mesh(new THREE.SphereGeometry(p[2],20,16),c);s.position.set(p[0],p[1],0);g.add(s);});}
 function bHouse(g){const w=new THREE.Mesh(new THREE.BoxGeometry(7,5,6),_mat(0xd9cbb0,0.7));w.position.y=2.5;g.add(w);const roof=new THREE.Mesh(new THREE.ConeGeometry(5.4,3,4),_mat(0xa5503e,0.7));roof.rotation.y=Math.PI/4;roof.position.y=6.5;g.add(roof);}
 const REFS=[
   {id:'reiskorn',de:'Reiskorn',en:'rice grain',h:0.006,w:0.006,size:'≈ 6 mm',build:bRice},
   {id:'muenze',de:'Münze',en:'coin',h:0.025,w:0.025,size:'≈ 2,5 cm',build:bCoin},
-  {id:'tennisball',de:'Tennisball',en:'tennis ball',h:0.065,w:0.065,size:'≈ 6,5 cm',build:bBall},
-  {id:'flasche',de:'Flasche',en:'bottle',h:0.26,w:0.08,size:'≈ 26 cm',build:bBottle},
   {id:'mensch',de:'Mensch',en:'person',h:1.75,w:0.7,size:'≈ 1,75 m',build:bPerson},
-  {id:'tuer',de:'Tür',en:'door',h:2.0,w:0.9,size:'≈ 2 m',build:bDoor},
   {id:'auto',de:'Auto',en:'car',h:1.45,w:4.4,size:'≈ 4,4 m',build:bCar},
-  {id:'haus',de:'Haus',en:'house',h:8,w:7.2,size:'≈ 8 m',build:bHouse},
-  {id:'baum',de:'Baum',en:'tree',h:10,w:5.6,size:'≈ 10 m',build:bTree}
+  {id:'haus',de:'Haus',en:'house',h:8,w:7.2,size:'≈ 8 m',build:bHouse}
 ];
 let compSel=['mensch'];
 function refDef(id){return REFS.find(r=>r.id===id);}
@@ -644,13 +643,17 @@ function buildRef(){
 }
 function renderRefChips(){const el=$('#refChips');if(!el)return;el.innerHTML=REFS.map(r=>`<div class="refchip ${compSel.indexOf(r.id)>=0?'on':''}" data-ref="${r.id}">${r[lang]} <span style="color:var(--muted-2)">${r.size}</span></div>`).join('');}
 function updateRefUI(){const show=view.ref&&appMode==='explore';$('#refCtl').style.display=show?'block':'none';if(!show)return;renderRefChips();$('#refInfo').innerHTML=D('Tipp: dieselbe Zahl ist als <b>'+unitSys+'</b> winzig oder riesig — vergleiche mit Reiskorn … Haus.','Tip: the same number is tiny or huge as <b>'+unitSys+'</b> — compare against rice grain … house.');}
+/* ===== Werkzeuge-Bereich (einklappbar) ===== */
+let toolsOpen=false;
+function setToolsHdr(){const b=$('#toolsHdr');if(!b)return;b.textContent=(toolsOpen?'▾ ':'▸ ')+D('🔬 Werkzeuge: O/V · Was-wäre-wenn','🔬 Tools: O/V · what-if');}
+function toggleTools(){toolsOpen=!toolsOpen;const bx=$('#toolsBox');if(bx)bx.style.display=toolsOpen?'block':'none';setToolsHdr();}
 /* ===== Oberfläche-zu-Volumen-Verhältnis ===== */
 let ovr={on:false,f:1};
 function ovrScaleDims(d,f){const o={};for(const k in d)o[k]=d[k]*f;return o;}
 function applyOVRScale(){const it=items.find(x=>x.id===selId);if(!it)return;items.forEach(o=>{if(o!==it)o.obj.scale.setScalar(1);});it.obj.scale.setScalar(ovr.on?ovr.f:1);if(ovr.on){orbit.target.set(it.obj.position.x,it.height*ovr.f*0.45,0);orbit.r=Math.max(10,(it.size+it.height)*ovr.f*1.7);applyCam();}}
 function ovrOff(){if(!ovr.on)return;ovr.on=false;ovr.f=1;const sl=$('#ovrSlider');if(sl)sl.value=1;applyOVRScale();layout();updateOVR();}
 function updateOVR(){
-  const it=items.find(x=>x.id===selId),b=$('#ovrBtn');if(!it||!b){if($('#ovrCtl'))$('#ovrCtl').style.display='none';return;}
+  const it=items.find(x=>x.id===selId),b=$('#ovrBtn');const _th=$('#toolsHdr');if(_th){_th.style.display=it?'block':'none';}setToolsHdr();if(!it||!b){if($('#ovrCtl'))$('#ovrCtl').style.display='none';return;}
   $('#ovrCtl').style.display='block';
   b.textContent=ovr.on?D('O/V-Verhältnis ausblenden','Hide O/V ratio'):D('📏 O/V-Verhältnis erkunden','📏 Explore O/V ratio');
   $('#ovrBox').style.display=ovr.on?'block':'none';
@@ -964,8 +967,19 @@ function solidsForLevel(l){return l<=1?['wuerfel','quader']:l===2?['wuerfel','qu
 function levelForIndex(i){if(diffMode==='rising'){const t=test.total;return i<t/3?1:i<2*t/3?2:3;}if(diffMode==='adaptive')return Math.max(1,Math.min(3,Math.round(test.adaptiveLevel)));const n=parseInt(diffMode,10);return(n>=1&&n<=3)?n:1;}
 function tolForLevel(l){return l===1?0.02:l===2?0.01:0.005;}
 function randDimByLevel(dim,l){const step=l===1?1:l===2?0.5:0.25;let lo=dim.min,hi=dim.max;if(l===1){lo=Math.max(1,Math.ceil(dim.min));hi=Math.floor(dim.max);if(hi<lo)hi=lo;}const vals=[];for(let v=Math.ceil(lo/step)*step;v<=hi+1e-9;v+=step)vals.push(Math.round(v*1000)/1000);let pool=vals;if(l===3){const f=vals.filter(v=>v>=lo+(hi-lo)*0.35);if(f.length)pool=f;}return pool.length?pool[Math.floor(Math.random()*pool.length)]:lo;}
-function timeLimitFor(q){return(120+q.level*30)+(q.kind==='reverse'?30:0);}
-function correctText(){return quiz.kind==='reverse'?(fmt(quiz.correct)+' '+UL()):(fmt(quiz.correct)+' '+(quiz.ask==='V'?UV():UA()));}
+function timeLimitFor(q){return(120+q.level*30)+(q.kind==='reverse'?30:0)+(q.kind==='convert'?20:0);}
+function uStr(uKey,measure){return uKey+(measure==='V'?'³':'²');}
+function pickTargetUnit(u){const order=['mm','cm','dm','m'],i=order.indexOf(u),cand=[];if(i>0)cand.push(order[i-1]);if(i<order.length-1)cand.push(order[i+1]);return cand[Math.floor(Math.random()*cand.length)]||order[(i+1)%order.length];}
+const CONTEXT={
+  wuerfel:{V:['Ein würfelförmiger Umzugskarton soll gefüllt werden. Wie viel passt hinein?','A cube-shaped moving box is being filled. How much fits inside?'],O:['Der Würfel wird rundum gestrichen. Wie groß ist die zu streichende Fläche?','The cube is painted all over. How large is the area to paint?']},
+  quader:{V:['Ein Aquarium hat diese Maße. Wie viel Wasser passt hinein?','An aquarium has these dimensions. How much water fits inside?'],O:['Ein quaderförmiges Geschenk wird eingepackt. Wie viel Papier braucht man (ohne Überlappung)?','A box-shaped present is wrapped. How much paper is needed (no overlap)?']},
+  zylinder:{V:['Eine zylindrische Konservendose. Wie viel passt hinein?','A cylindrical can. How much fits inside?'],O:['Wie viel Blech braucht man für die Dose (mit Deckel und Boden)?','How much sheet metal is needed for the can (lid and base included)?']},
+  kegel:{V:['Ein Eishörnchen wird randvoll gefüllt. Wie viel Eis passt hinein?','An ice-cream cone is filled to the brim. How much fits inside?']},
+  pyramide:{V:['Ein Zelt hat die Form einer Pyramide. Wie groß ist das Raumvolumen?','A tent is shaped like a pyramid. What is its volume?']},
+  kugel:{V:['Ein Ball wird aufgepumpt. Wie viel Luft passt hinein?','A ball is inflated. How much air fits inside?'],O:['Wie viel Leder braucht man für die Außenhülle des Balls?','How much leather is needed for the ball\u2019s outer surface?']},
+  prisma:{V:['Eine Toblerone-Packung (dreiseitiges Prisma). Wie groß ist das Volumen?','A Toblerone pack (triangular prism). What is its volume?']}
+};
+function correctText(){if(quiz.kind==='reverse')return fmt(quiz.correct)+' '+UL();if(quiz.kind==='convert')return fmt(quiz.correct)+' '+uStr(quiz.cvToU,quiz.cvMeasure);return fmt(quiz.correct)+' '+(quiz.ask==='V'?UV():UA());}
 
 function stopTimer(){if(qTimerId){clearInterval(qTimerId);qTimerId=null;}}
 function elapsed(){return(performance.now()-qStart)/1000;}
@@ -975,10 +989,11 @@ function onTimeout(){stopTimer();test.checked=true;quiz.recorded=true;test.wrong
 
 function resetQ(){quiz.solved=false;quiz.recorded=false;quiz.attempts=0;quiz.lastAns=null;quiz.hintStage=0;quiz.hintUsed=false;}
 function loadSnapshot(s){
-  quiz.type=s.type;quiz.dims=Object.assign({},s.dims);quiz.level=s.level;quiz.kind=s.kind;resetQ();
+  quiz.type=s.type;quiz.dims=Object.assign({},s.dims);quiz.level=s.level;quiz.kind=s.kind;resetQ();quiz.story=s.story||null;
   const r=SOLIDS[s.type].calc(quiz.dims);
   if(s.kind==='forward'){quiz.ask=s.ask;quiz.correct=quiz.ask==='V'?r.vol.val:r.area.val;}
-  else{quiz.measure='V';quiz.measureVal=r.vol.val;quiz.unknown=s.unknown;quiz.correct=quiz.dims[s.unknown];}
+  else if(s.kind==='reverse'){quiz.measure='V';quiz.measureVal=r.vol.val;quiz.unknown=s.unknown;quiz.correct=quiz.dims[s.unknown];}
+  else{quiz.cvMeasure=s.cvMeasure;quiz.cvFromU=s.cvFromU;quiz.cvToU=s.cvToU;quiz.cvBase=s.cvMeasure==='V'?r.vol.val:r.area.val;const exp=s.cvMeasure==='V'?3:2,Lf=UNIT_M[s.cvFromU]/UNIT_M[s.cvToU];quiz.correct=quiz.cvBase*Math.pow(Lf,exp);}
   test.checked=false;qLimit=timeLimitFor(quiz);qStart=performance.now();setQuizSolid(quiz.type,quiz.dims);
 }
 function newQuestion(){
@@ -988,10 +1003,21 @@ function newQuestion(){
   const type=pool[Math.floor(Math.random()*pool.length)];
   const dims={};SOLIDS[type].dims.forEach(d=>dims[d.k]=randDimByLevel(d,lvl));
   const r=SOLIDS[type].calc(dims);
-  const revChance=lvl===1?0:lvl===2?0.3:0.45,reverse=(askSetting!=='O')&&Math.random()<revChance;
-  quiz.type=type;quiz.dims=dims;quiz.level=lvl;resetQ();
-  if(!reverse){quiz.kind='forward';quiz.ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting;quiz.correct=quiz.ask==='V'?r.vol.val:r.area.val;}
-  else{quiz.kind='reverse';quiz.measure='V';quiz.measureVal=r.vol.val;const keys=SOLIDS[type].dims.map(d=>d.k);quiz.unknown=keys[Math.floor(Math.random()*keys.length)];quiz.correct=dims[quiz.unknown];}
+  quiz.type=type;quiz.dims=dims;quiz.level=lvl;resetQ();quiz.story=null;
+  const revChance=lvl===1?0:lvl===2?0.3:0.45,cvChance=(askSetting==='rand')?(lvl===1?0.18:0.2):0,roll=Math.random();
+  let kind;
+  if((askSetting!=='O')&&roll<revChance)kind='reverse';
+  else if(cvChance>0&&roll<revChance+cvChance)kind='convert';
+  else kind='forward';
+  if(kind==='forward'){
+    quiz.kind='forward';quiz.ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting;quiz.correct=quiz.ask==='V'?r.vol.val:r.area.val;
+    const cx=CONTEXT[type]&&CONTEXT[type][quiz.ask];if(cx&&lvl>=1&&Math.random()<0.4)quiz.story=cx[lang];
+  } else if(kind==='reverse'){
+    quiz.kind='reverse';quiz.measure='V';quiz.measureVal=r.vol.val;const keys=SOLIDS[type].dims.map(d=>d.k);quiz.unknown=keys[Math.floor(Math.random()*keys.length)];quiz.correct=dims[quiz.unknown];
+  } else {
+    quiz.kind='convert';quiz.cvMeasure=Math.random()<0.75?'V':'O';quiz.cvBase=quiz.cvMeasure==='V'?r.vol.val:r.area.val;quiz.cvFromU=unitSys;quiz.cvToU=pickTargetUnit(unitSys);
+    const exp=quiz.cvMeasure==='V'?3:2,Lf=UNIT_M[quiz.cvFromU]/UNIT_M[quiz.cvToU];quiz.correct=quiz.cvBase*Math.pow(Lf,exp);
+  }
   test.checked=false;qLimit=timeLimitFor(quiz);qStart=performance.now();setQuizSolid(type,dims);renderQuiz();startTimer();
 }
 function renderQuiz(){
@@ -1001,14 +1027,23 @@ function renderQuiz(){
   if(quiz.kind==='forward'){
     givenStr=def.dims.map(d=>`${d.k} = ${fmtD(quiz.dims[d.k])}${uSuf}`).join(',  ');
     askTxt=D('Berechne ','Calculate ')+(quiz.ask==='V'?D('das <b>Volumen V</b>','the <b>volume V</b>'):D('die <b>Oberfläche O</b>','the <b>surface area O</b>'))+'.';
+    if(quiz.story)askTxt='<span style="color:var(--text)">'+quiz.story+'</span><br>'+askTxt;
     unit=quiz.ask==='V'?UV():UA();
-  } else {
+  } else if(quiz.kind==='reverse'){
     const others=def.dims.filter(d=>d.k!==quiz.unknown).map(d=>`${d.k} = ${fmtD(quiz.dims[d.k])}${uSuf}`);
     givenStr='V = '+fmt(quiz.measureVal)+' '+UV()+(others.length?',  '+others.join(',  '):'');
     askTxt=D('Gesucht: ','Find: ')+'<b>'+quiz.unknown+'</b>'+D(' — stelle die Formel um!',' — rearrange the formula!');
     unit=UL();
+  } else {
+    const toU=uStr(quiz.cvToU,quiz.cvMeasure),mV=quiz.cvMeasure==='V';
+    givenStr=def.dims.map(d=>`${d.k} = ${fmtD(quiz.dims[d.k])}${uSuf}`).join(',  ');
+    askTxt=mV
+      ? D('Berechne das <b>Volumen V</b> und gib es in <b>'+toU+'</b> an.','Compute the <b>volume V</b> and express it in <b>'+toU+'</b>.')
+      : D('Berechne die <b>Oberfläche O</b> und gib sie in <b>'+toU+'</b> an.','Compute the <b>surface O</b> and express it in <b>'+toU+'</b>.');
+    unit=toU;
   }
-  const lvlChip=`<span class="lvlchip l${quiz.level}">${D('Stufe','Level')} ${quiz.level}${quiz.kind==='reverse'?' · ⇄':''}</span>`;
+  const km=quiz.kind==='reverse'?' · ⇄':quiz.kind==='convert'?' · ↔':(quiz.story?' · 📖':'');
+  const lvlChip=`<span class="lvlchip l${quiz.level}">${D('Stufe','Level')} ${quiz.level}${km}</span>`;
   const meta=practiceMode
     ?`<div class="qmeta">${lvlChip}<span class="qtimenum" style="color:var(--teal)">${D('Übungsmodus','Practice')}</span></div>`
     :`<div class="qtime"><i id="qTimeBar"></i></div><div class="qmeta">${lvlChip}<span id="qTimeNum" class="qtimenum"></span></div>`;
@@ -1023,8 +1058,15 @@ function renderQuiz(){
   const hr=$('#qHelpRow');if(hr)hr.style.display=(examMode||!helpAllowed)?'none':'';
 }
 function diagnose(v){
-  const t=quiz.type,d=quiz.dims,r=SOLIDS[t].calc(d),ask=quiz.ask;
-  const near=(a,b)=>b!==0&&Math.abs(a-b)<=Math.abs(b)*0.03+1e-6,traps=[];
+  const near=(a,b)=>b!==0&&Math.abs(a-b)<=Math.abs(b)*0.03+1e-6;
+  if(quiz.kind==='convert'){
+    const exp=quiz.cvMeasure==='V'?3:2,Lf=UNIT_M[quiz.cvFromU]/UNIT_M[quiz.cvToU];
+    const linear=quiz.cvBase*Lf,wrongDir=quiz.cvBase*Math.pow(1/Lf,exp);
+    if(near(v,linear))return D('Du hast nur den <b>Längenfaktor</b> benutzt. Bei '+(exp===3?'Volumen musst du ihn <b>hoch 3</b>':'Fläche musst du ihn <b>hoch 2</b>')+' nehmen.','You used only the <b>length factor</b>. For '+(exp===3?'volume raise it to the <b>power 3</b>':'area raise it to the <b>power 2</b>')+'.');
+    if(near(v,wrongDir))return D('Richtung verwechselt: hier von '+uStr(quiz.cvFromU,quiz.cvMeasure)+' nach '+uStr(quiz.cvToU,quiz.cvMeasure)+' umrechnen.','Wrong direction: convert from '+uStr(quiz.cvFromU,quiz.cvMeasure)+' to '+uStr(quiz.cvToU,quiz.cvMeasure)+'.');
+    return null;
+  }
+  const t=quiz.type,d=quiz.dims,r=SOLIDS[t].calc(d),ask=quiz.ask,traps=[];
   if(quiz.kind==='forward'){
     const other=ask==='V'?r.area.val:r.vol.val;
     traps.push([other,ask==='V'
@@ -1066,6 +1108,14 @@ function diagnose(v){
 }
 function buildSteps(){
   const r=SOLIDS[quiz.type].calc(quiz.dims),col=HEX(C[quiz.type]),S=[];
+  if(quiz.kind==='convert'){
+    const exp=quiz.cvMeasure==='V'?3:2,o=quiz.cvMeasure==='V'?r.vol:r.area,fromU=uStr(quiz.cvFromU,quiz.cvMeasure),toU=uStr(quiz.cvToU,quiz.cvMeasure),Lf=UNIT_M[quiz.cvFromU]/UNIT_M[quiz.cvToU],factor=Math.pow(Lf,exp);
+    S.push(D('Größe berechnen:','Compute the quantity:')+' '+o.f+' = <b>'+fmt(quiz.cvBase)+'</b> '+fromU);
+    S.push(D('Längen umrechnen:','Convert lengths:')+' 1 '+quiz.cvFromU+' = '+fmtNum(Lf)+' '+quiz.cvToU);
+    S.push((exp===3?D('Beim Volumen hoch 3:','For volume, cube it:'):D('Bei der Fläche hoch 2:','For area, square it:'))+' ×'+fmtNum(Lf)+(exp===3?'³':'²')+' = ×'+fmtNum(factor));
+    S.push(D('Ergebnis:','Result:')+' = <b>'+fmt(quiz.correct)+'</b> '+toU);
+    return `<div class="formula"><div class="ftitle"><span class="tag" style="color:${col}">↔</span>${D('Schritt für Schritt','Step by step')}</div>`+S.map((s,i)=>`<div class="line"><span class="op">${i+1}.</span><span>${s}</span></div>`).join('')+`</div>`;
+  }
   if(quiz.kind==='forward'){
     const o=quiz.ask==='V'?r.vol:r.area,unit=quiz.ask==='V'?UV():UA();
     S.push(D('Formel notieren:','Write the formula:')+' <b>'+o.f+'</b>');
@@ -1085,6 +1135,9 @@ function useHint(){
   quiz.hintUsed=true;quiz.hintStage=(quiz.hintStage||0)+1;
   const r=SOLIDS[quiz.type].calc(quiz.dims),col=HEX(C[quiz.type]),hb=$('#qHintBtn');
   if(quiz.hintStage===1){
+    if(quiz.kind==='convert'){const exp=quiz.cvMeasure==='V'?3:2,Lf=UNIT_M[quiz.cvFromU]/UNIT_M[quiz.cvToU];
+      $('#qSolBox').innerHTML=`<div class="formula"><div class="ftitle"><span class="tag" style="color:${col}">↔</span>${D('Tipp','Hint')}</div><div class="line"><span class="op"></span>${D('Erst die Größe berechnen, dann umrechnen: 1 '+quiz.cvFromU+' = '+fmtNum(Lf)+' '+quiz.cvToU+' → Faktor <b>hoch '+exp+'</b>.','First compute the quantity, then convert: 1 '+quiz.cvFromU+' = '+fmtNum(Lf)+' '+quiz.cvToU+' → factor to the <b>power '+exp+'</b>.')}</div></div>`;
+      if(hb)hb.textContent=D('💡 Mehr Hilfe','💡 More help');return;}
     const o=quiz.kind==='forward'?(quiz.ask==='V'?r.vol:r.area):r.vol;
     const tip=quiz.kind==='reverse'?D('Nach '+quiz.unknown+' umstellen.','Solve for '+quiz.unknown+'.'):(r.extra?D('Berechne zuerst den Zwischenwert.','Compute the helper value first.'):'');
     $('#qSolBox').innerHTML=`<div class="formula"><div class="ftitle"><span class="tag" style="color:${col}">${D('Formel','Formula')}</span></div><div class="line"><span class="op"></span>${o.f}</div>${tip?`<div class="extra">${tip}</div>`:''}</div>`;
@@ -1094,8 +1147,15 @@ function useHint(){
     if(hb)hb.disabled=true;
   }
 }
-function awardPoints(){let base=quiz.level*100;if(quiz.kind==='reverse')base*=1.5;const tb=practiceMode?0:Math.round((qLimit>0?Math.max(0,qLimit-elapsed())/qLimit:0)*50),sb=Math.max(0,(test.streak-1)*25);let pts=base+tb+sb;if(quiz.hintUsed)pts*=0.5;if(quiz.attempts>0)pts*=Math.max(0.3,1-quiz.attempts*0.25);return Math.max(0,Math.round(pts));}
-function recordResult(ok,answer,pts){const snap={type:quiz.type,dims:Object.assign({},quiz.dims),kind:quiz.kind,level:quiz.level,ask:quiz.kind==='forward'?quiz.ask:null,unknown:quiz.kind==='reverse'?quiz.unknown:null};const given=quiz.kind==='forward'?SOLIDS[quiz.type].dims.map(d=>`${d.k}=${fmtD(quiz.dims[d.k])}`).join(', '):('V='+fmt(quiz.measureVal)+'; '+SOLIDS[quiz.type].dims.filter(d=>d.k!==quiz.unknown).map(d=>`${d.k}=${fmtD(quiz.dims[d.k])}`).join(', '));const askLabel=quiz.kind==='forward'?quiz.ask:('→'+quiz.unknown);test.results.push({n:test.idx+1,type:quiz.type,kind:quiz.kind,level:quiz.level,ask:askLabel,given,correct:quiz.correct,answer,ok,points:pts||0,hint:quiz.hintUsed,q:snap});}
+function awardPoints(){let base=quiz.level*100;if(quiz.kind==='reverse')base*=1.5;else if(quiz.kind==='convert')base*=1.3;const tb=practiceMode?0:Math.round((qLimit>0?Math.max(0,qLimit-elapsed())/qLimit:0)*50),sb=Math.max(0,(test.streak-1)*25);let pts=base+tb+sb;if(quiz.hintUsed)pts*=0.5;if(quiz.attempts>0)pts*=Math.max(0.3,1-quiz.attempts*0.25);return Math.max(0,Math.round(pts));}
+function recordResult(ok,answer,pts){
+  const snap={type:quiz.type,dims:Object.assign({},quiz.dims),kind:quiz.kind,level:quiz.level,ask:quiz.kind==='forward'?quiz.ask:null,unknown:quiz.kind==='reverse'?quiz.unknown:null,story:quiz.story||null,cvMeasure:quiz.cvMeasure||null,cvFromU:quiz.cvFromU||null,cvToU:quiz.cvToU||null};
+  let given,askLabel;
+  if(quiz.kind==='forward'){given=SOLIDS[quiz.type].dims.map(d=>`${d.k}=${fmtD(quiz.dims[d.k])}`).join(', ');askLabel=quiz.ask;}
+  else if(quiz.kind==='reverse'){given='V='+fmt(quiz.measureVal)+'; '+SOLIDS[quiz.type].dims.filter(d=>d.k!==quiz.unknown).map(d=>`${d.k}=${fmtD(quiz.dims[d.k])}`).join(', ');askLabel='→'+quiz.unknown;}
+  else{given=fmt(quiz.cvBase)+' '+uStr(quiz.cvFromU,quiz.cvMeasure)+' → '+uStr(quiz.cvToU,quiz.cvMeasure);askLabel=quiz.cvMeasure+'↔';}
+  test.results.push({n:test.idx+1,type:quiz.type,kind:quiz.kind,level:quiz.level,ask:askLabel,given,correct:quiz.correct,answer,ok,points:pts||0,hint:quiz.hintUsed,q:snap});
+}
 function checkAnswer(){
   if(test.finished)return;
   if(test.checked&&!(practiceMode&&!quiz.solved))return;
@@ -1142,7 +1202,7 @@ function missedSnapshots(){return test.results.filter(r=>!r.ok).map(r=>r.q);}
 function weaknessStats(){const by={};test.results.forEach(r=>{(by[r.type]=by[r.type]||{ok:0,n:0});by[r.type].n++;if(r.ok)by[r.type].ok++;});return Object.keys(by).map(t=>({type:t,ok:by[t].ok,n:by[t].n,pct:Math.round(by[t].ok/by[t].n*100)})).sort((a,b)=>a.pct-b.pct);}
 function renderResults(){
   const pct=Math.round(test.right/test.total*100),st=starsFor(pct),badge=badgeFor(st),starStr='★'.repeat(st)+'☆'.repeat(5-st),missed=test.results.filter(r=>!r.ok).length;
-  const rows=test.results.map(r=>{const okTxt=r.answer==null?'–':(r.ok?'✓':'✗'),cls=r.answer==null?'sk':(r.ok?'ok':'no'),kindTag=r.kind==='reverse'?'⇄':'';return `<div class="rrow ${cls}"><span class="rn">${r.n}</span><span class="rs">${SOLIDS[r.type].name[lang]} <small style="color:var(--muted-2);font-weight:400">${r.ask} ${kindTag} ·L${r.level}</small></span><span class="rg">${r.points>0?'+'+r.points:''}</span><span class="rok">${okTxt}</span></div>`;}).join('');
+  const rows=test.results.map(r=>{const okTxt=r.answer==null?'–':(r.ok?'✓':'✗'),cls=r.answer==null?'sk':(r.ok?'ok':'no'),kindTag=r.kind==='reverse'?'⇄':r.kind==='convert'?'↔':(r.q&&r.q.story?'📖':'');return `<div class="rrow ${cls}"><span class="rn">${r.n}</span><span class="rs">${SOLIDS[r.type].name[lang]} <small style="color:var(--muted-2);font-weight:400">${r.ask} ${kindTag} ·L${r.level}</small></span><span class="rg">${r.points>0?'+'+r.points:''}</span><span class="rok">${okTxt}</span></div>`;}).join('');
   const stats=weaknessStats(),weak=stats.filter(s=>s.pct<100).map(s=>s.type);
   const statBars=stats.map(s=>{const c=s.pct>=80?'var(--green)':s.pct>=50?'var(--amber)':'var(--rose)';return `<div style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px"><span style="width:74px;color:var(--text)">${SOLIDS[s.type].name[lang]}</span><span style="flex:1;height:7px;border-radius:7px;background:var(--panel-3);overflow:hidden"><i style="display:block;height:100%;width:${s.pct}%;background:${c}"></i></span><span style="font-family:'Spline Sans Mono',monospace;color:var(--muted);width:58px;text-align:right">${s.ok}/${s.n} · ${s.pct}%</span></div>`;}).join('');
   const scoreLine=practiceMode?`<div class="rbig ${pct>=50?'g':'a'}">${pct}%</div><div class="rsub">${test.right}/${test.total} ${D('gelöst','solved')} · ${D('Übungsmodus','Practice mode')}</div>`:`<div class="rbig ${pct>=50?'g':'a'}">★ ${test.score}</div><div class="rsub">${test.right}/${test.total} ${D('richtig','correct')} · ${pct}% · ${D('beste Serie','best streak')} ${test.bestStreak}</div>`;
@@ -1238,6 +1298,65 @@ function exportPDFNow(filename,studentName){
   doc.setTextColor(150);doc.setFontSize(8);doc.text('V: '+UV()+'   O: '+UA()+'   ⇄ = '+D('Rückwärtsaufgabe','reverse task'),M,Math.min(y+8,832));
   doc.save(filename||defName('pdf'));
 }
+/* ---------- Arbeitsblatt-Generator ---------- */
+function wsLevelFor(i,n){if(diffMode==='rising')return i<n/3?1:i<2*n/3?2:3;const k=parseInt(diffMode,10);if(k>=1&&k<=3)return k;return 2;}
+function wsGenerate(n){
+  const out=[],uL=UL();
+  for(let i=0;i<n;i++){
+    const lvl=wsLevelFor(i,n),pool=solidsForLevel(lvl),type=pool[Math.floor(Math.random()*pool.length)];
+    const dims={};SOLIDS[type].dims.forEach(d=>dims[d.k]=randDimByLevel(d,lvl));
+    const r=SOLIDS[type].calc(dims),name=SOLIDS[type].name[lang];
+    const dimStr=SOLIDS[type].dims.map(d=>`${d.k} = ${fmtD(dims[d.k])} ${uL}`).join(', ');
+    const revChance=lvl===1?0:lvl===2?0.3:0.45,cvChance=(askSetting==='rand')?0.2:0,roll=Math.random();
+    let kind;if((askSetting!=='O')&&roll<revChance)kind='reverse';else if(cvChance>0&&roll<revChance+cvChance)kind='convert';else kind='forward';
+    let prompt,answer,tag='';
+    if(kind==='forward'){
+      const ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting,correct=ask==='V'?r.vol.val:r.area.val;
+      const cx=CONTEXT[type]&&CONTEXT[type][ask],story=(cx&&lvl>=1&&Math.random()<0.4)?cx[lang]:null;
+      const instr=ask==='V'?D('Berechne das Volumen V.','Calculate the volume V.'):D('Berechne die Oberfläche O.','Calculate the surface area O.');
+      prompt=`${name}: ${dimStr}. ${story?story+' ':''}${instr}`;answer=fmt(correct)+' '+(ask==='V'?UV():UA());if(story)tag=D('(Sachaufgabe)','(word problem)');
+    } else if(kind==='reverse'){
+      const keys=SOLIDS[type].dims.map(d=>d.k),unk=keys[Math.floor(Math.random()*keys.length)];
+      const others=SOLIDS[type].dims.filter(d=>d.k!==unk).map(d=>`${d.k} = ${fmtD(dims[d.k])} ${uL}`).join(', ');
+      prompt=`${name}: V = ${fmt(r.vol.val)} ${UV()}${others?', '+others:''}. ${D('Gesucht','Find')}: ${unk}.`;answer=`${unk} = ${fmt(dims[unk])} ${uL}`;tag=D('(Umkehraufgabe)','(reverse)');
+    } else {
+      const cvM=Math.random()<0.75?'V':'O',base=cvM==='V'?r.vol.val:r.area.val,toU=pickTargetUnit(unitSys),exp=cvM==='V'?3:2,Lf=UNIT_M[unitSys]/UNIT_M[toU],correct=base*Math.pow(Lf,exp);
+      const instr=cvM==='V'?D('Berechne V und gib es in '+uStr(toU,cvM)+' an.','Compute V and express it in '+uStr(toU,cvM)+'.'):D('Berechne O und gib es in '+uStr(toU,cvM)+' an.','Compute O and express it in '+uStr(toU,cvM)+'.');
+      prompt=`${name}: ${dimStr}. ${instr}`;answer=fmt(correct)+' '+uStr(toU,cvM);tag=D('(Umrechnung)','(conversion)');
+    }
+    out.push({prompt,answer,tag,level:lvl});
+  }
+  return out;
+}
+function exportWorksheet(){ensureJsPDF(()=>exportWorksheetNow());}
+function exportWorksheetNow(){
+  const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'pt',format:'a4'}),M=42,RX=553,items=wsGenerate(chosenCount);
+  let y=54;
+  doc.setFont('helvetica','bold');doc.setFontSize(17);doc.setTextColor(20);doc.text(D('Körper·Werkstatt — Arbeitsblatt','Solids·Workshop — Worksheet'),M,y);y+=20;
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(90);
+  doc.text(D('Name: ____________________     Klasse: __________     Datum: __________','Name: ____________________     Class: __________     Date: __________'),M,y);y+=14;
+  doc.setFontSize(9);doc.text(D('Schwierigkeit: ','Difficulty: ')+diffMode+'   ·   '+D('Aufgaben: ','Questions: ')+items.length+'   ·   '+D('Einheit: ','Unit: ')+unitSys,M,y);y+=8;
+  doc.setDrawColor(210);doc.line(M,y,RX,y);y+=20;
+  items.forEach((it,i)=>{
+    const lines=doc.splitTextToSize((i+1)+'.  '+it.prompt+(it.tag?'   '+it.tag:''),RX-M);
+    const blockH=lines.length*13+40;
+    if(y+blockH>798){doc.addPage();y=54;}
+    doc.setFont('helvetica','bold');doc.setFontSize(10.5);doc.setTextColor(20);doc.text(lines,M,y);y+=lines.length*13+8;
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(150);doc.text(D('Lösung:','Answer:'),M,y);
+    doc.setDrawColor(205);doc.line(M+52,y+1,RX,y+1);y+=24;
+    doc.setDrawColor(235);doc.line(M,y-8,RX,y-8);
+  });
+  doc.addPage();y=54;
+  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(20);doc.text(D('Lösungsblatt','Answer key'),M,y);y+=22;
+  doc.setFont('helvetica','normal');doc.setFontSize(10);
+  items.forEach((it,i)=>{
+    if(y>808){doc.addPage();y=54;}
+    doc.setTextColor(150);doc.text((i+1)+'.',M,y);
+    doc.setTextColor(30);const al=doc.splitTextToSize(it.answer+(it.tag?'   '+it.tag:''),RX-M-24);doc.text(al,M+24,y);y+=al.length*14+2;
+  });
+  doc.setTextColor(150);doc.setFontSize(8);doc.text('V: '+UV()+'   O: '+UA(),M,Math.min(y+10,832));
+  doc.save('koerper-arbeitsblatt_'+slug(curClass()||'klasse')+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+}
 
 /* ================= MODE + EVENTS ================= */
 let appMode='explore';
@@ -1263,7 +1382,7 @@ function setAppMode(m){
   if(m==='quiz'){if(!test.active){startTest();}else{if(test.finished){renderResults();}else{setQuizSolid(quiz.type,quiz.dims);renderQuiz();if(!test.checked)startTimer();}renderTestHeader();}}
 }
 function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();renderHelpRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
-function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');renderFooter();refreshAll();updateSection();updateRefUI();if(cpa.on)renderCPA();}
+function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');renderFooter();refreshAll();updateSection();updateRefUI();setToolsHdr();if(cpa.on)renderCPA();}
 function setUnit(u){unitSys=u;document.querySelectorAll('[data-unit]').forEach(b=>b.classList.toggle('active',b.dataset.unit===u));refreshAll();updateSection();if(appMode==='explore')layout();else{buildAxes();buildRef();}updateRefUI();}
 const SOURCES=[
  {cite:'Hattie, J. & Timperley, H. (2007). The Power of Feedback. Review of Educational Research, 77(1), 81–112.',url:'https://doi.org/10.3102/003465430298487',deWhy:'Diagnostisches Feedback: Rückmeldung wirkt am stärksten, wenn sie erklärt, warum etwas falsch ist – nicht nur, dass es falsch ist.',enWhy:'Diagnostic feedback: feedback works best when it explains why something is wrong, not merely that it is.'},
@@ -1299,6 +1418,7 @@ $('#dims').addEventListener('input',safe(e=>{const t=e.target;if(t.matches('inpu
 $('#dims').addEventListener('change',safe(e=>{const t=e.target;if(t.matches('input.num[data-num]')){const it=items.find(x=>x.id===selId);if(it)t.value=fmtNum(it.dims[t.dataset.num]);}}));
 $('#dims').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur();});
 $('#whyBtn').addEventListener('click',safe(()=>{const b=$('#whyBox');b.style.display=b.style.display==='none'?'block':'none';}));
+$('#toolsHdr').addEventListener('click',safe(toggleTools));
 $('#fillBtn').addEventListener('click',safe(()=>{const it=items.find(x=>x.id===selId);if(!it||!isFillType(it.type))return;fill.on=!fill.on;if(fill.on){ovrOff();section.on=false;const stg=document.querySelector('.tg[data-t="section"]');if(stg)stg.classList.remove('on');$('#sectionCtl').style.display='none';updateSection();fill.layer=null;}buildFill();}));
 $('#ovrBtn').addEventListener('click',safe(()=>{const it=items.find(x=>x.id===selId);if(!it)return;ovr.on=!ovr.on;
   if(ovr.on){fill.on=false;buildFill();section.on=false;const stg=document.querySelector('.tg[data-t="section"]');if(stg)stg.classList.remove('on');$('#sectionCtl').style.display='none';updateSection();if(view.ref){view.ref=false;const rtg=document.querySelector('.tg[data-t="ref"]');if(rtg)rtg.classList.remove('on');layout();updateRefUI();}ovr.f=1;const sl=$('#ovrSlider');if(sl)sl.value=1;applyOVRScale();}
@@ -1324,6 +1444,7 @@ $('#btnReset').addEventListener('click',safe(()=>{counted=new Set();styleFaces()
 $('#btnGrid').addEventListener('click',safe(()=>{netGrid=!netGrid;drawNet(true);}));
 /* test */
 $('#qKindRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-kind]');if(!b)return;practiceMode=b.dataset.kind==='practice';focusSolids=null;renderKindRow();startTest();}));
+$('#qWorksheet').addEventListener('click',safe(exportWorksheet));
 $('#qCountRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-count]');if(!b)return;chosenCount=parseInt(b.dataset.count,10);focusSolids=null;renderCountRow();startTest();}));
 $('#qDiffRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));

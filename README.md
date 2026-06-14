@@ -42,7 +42,7 @@ The app has three modes, switchable via the tabs at the top:
 **3. Test — questions**
 - Two modes: **Test** (timed, scored) or **Practice** (no time pressure, unlimited attempts).
 - Difficulty **levels 1–3**, plus **Rising** or **Adaptive**.
-- Choose **10 / 20 / 30** questions; ask for **V, O, or mixed**; includes **reverse questions** (rearrange the formula).
+- Choose **5 / 10 / 15 / 20 / 25** questions; ask for **V, O, or mixed**. Four question types are mixed in: standard, **reverse** (⇄ rearrange the formula for a missing dimension), **unit conversion** (↔ e.g. express a volume in mm³/dm³), and **real-world word problems** (📖 e.g. "how much water fits in the can?"). Each wrong answer gives a **named-misconception diagnosis**.
 - **Diagnostic feedback**: detects common mistakes from the entered number and explains them — forgot the ⅓, mixed up radius/diameter, computed O instead of V, wrong order of magnitude.
 - **Staged hints** (💡): first the formula, then the full **step-by-step solution**.
 - **Weakness statistics** at the end (accuracy per solid) + a **"Practice weakest solids"** button.
@@ -54,6 +54,8 @@ The app has three modes, switchable via the tabs at the top:
 ### Classroom use
 
 The Test tab has fields for the **student's name** and **class** (stored locally in the browser). At the end of a test, click **📄 Save as PDF** — a clean report (name, class, score, per-question breakdown) is downloaded. Optionally, **Data as JSON** exports the same results in machine-readable form for analysis.
+
+**Printable worksheets (no devices needed).** In the Test settings, **📄 Worksheet as PDF** generates a print-ready worksheet using the chosen count, difficulty and question type — with writing space for each task — plus a **separate answer key** on the last page. Each click produces a fresh randomised set.
 
 > A sphere, by the way, has no real net; see the note in the Net tab.
 
@@ -118,7 +120,7 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 **3. Test — Aufgaben**
 - Zwei Betriebsarten: **Test** (mit Zeit & Punkten) oder **Üben** (ohne Zeitdruck, beliebig viele Versuche).
 - Schwierigkeit **Stufe 1–3**, dazu **Ansteigend** oder **Adaptiv**.
-- Aufgabenzahl **10 / 20 / 30** wählbar; Frage nach **V, O oder gemischt**; auch **Rückwärtsaufgaben** (Formel umstellen).
+- Aufgabenzahl **5 / 10 / 15 / 20 / 25** wählbar; Frage nach **V, O oder gemischt**. Vier Aufgabentypen sind eingemischt: Standard, **Umkehraufgaben** (⇄ Formel nach einer fehlenden Größe umstellen), **Einheiten umrechnen** (↔ z. B. ein Volumen in mm³/dm³ angeben) und **Realbezug-Textaufgaben** (📖 z. B. „Wie viel Wasser passt in die Dose?"). Jede falsche Antwort liefert eine **benannte Fehlvorstellungs-Diagnose**.
 - **Diagnostisches Feedback**: erkennt typische Fehler an der eingegebenen Zahl und erklärt sie — ⅓ vergessen, Radius/Durchmesser verwechselt, O statt V, falsche Größenordnung.
 - **Gestufte Tipps** (💡): erst die Formel, dann die volle **Schritt-für-Schritt-Lösung**.
 - **Schwächen-Statistik** am Ende (Trefferquote pro Körper) + Knopf **„Schwächste Körper üben"**.
@@ -130,6 +132,8 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 ### Einsatz im Unterricht
 
 Im Test-Tab gibt es Felder für **Name** der Schüler:in und **Klasse** (werden lokal im Browser gemerkt). Am Ende des Tests auf **📄 Als PDF speichern** klicken — ein sauberes Protokoll (Name, Klasse, Punkte, Aufgabenübersicht) wird heruntergeladen. Optional exportiert **Daten als JSON** dieselben Ergebnisse maschinenlesbar zur Auswertung.
+
+**Druckbare Arbeitsblätter (ganz ohne Geräte).** In den Test-Einstellungen erzeugt **📄 Arbeitsblatt als PDF** ein druckfertiges Arbeitsblatt mit der gewählten Anzahl, Schwierigkeit und Frageart — mit Schreibplatz pro Aufgabe — plus **separatem Lösungsblatt** auf der letzten Seite. Jeder Klick erzeugt einen neuen, zufälligen Satz.
 
 > Eine Kugel hat übrigens kein echtes Netz; siehe Hinweis im Netz-Tab.
 
