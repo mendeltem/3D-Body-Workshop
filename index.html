@@ -292,13 +292,15 @@
 
       <div id="quizPanel" style="display:none">
         <div id="testHeader"></div>
-        <div class="sec-lbl" data-i18n="class_label">Klasse / Versand</div>
+        <div class="sec-lbl" data-i18n="class_label">Klasse</div>
         <div style="margin-bottom:18px">
           <label class="fieldlbl" data-i18n="name_lbl">Name / Kürzel der Schüler:in</label>
           <input id="stuName" class="field" type="text" autocomplete="off" placeholder="z. B. Mia K.">
-          <label class="fieldlbl" style="margin-top:10px" data-i18n="mail_lbl">E-Mail der Lehrkraft</label>
-          <input id="teachMail" class="field" type="email" autocomplete="off" placeholder="lehrer@schule.de">
+          <label class="fieldlbl" style="margin-top:10px" data-i18n="cls_lbl">Klasse / Kurs</label>
+          <input id="clsName" class="field" type="text" autocomplete="off" placeholder="z. B. 8b">
+          <div class="rsub" id="dsgvoNote" data-i18n="dsgvo" style="margin-top:8px;text-align:left;line-height:1.5"></div>
         </div>
+        <div id="qSettings">
         <div class="sec-lbl" data-i18n="mode_label">Modus</div>
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qKindRow"></div>
         <div class="sec-lbl" data-i18n="count_label">Aufgaben</div>
@@ -308,11 +310,14 @@
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qModeRow"></div>
         <div class="sec-lbl" data-i18n="asked_label">Gefragt wird nach</div>
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qaskRow"></div>
+        <button class="btn" id="qShare" data-i18n="share_btn" style="margin-bottom:16px">🔗 Aufgabe als Link teilen</button>
+        </div>
+        <div class="hint-box" id="examBanner" data-i18n-html="exam_banner" style="display:none"></div>
         <div id="testPlay">
           <div class="qbox" id="qbox"></div>
           <button class="btn primary" id="qCheck" data-i18n="btn_check">Antwort prüfen</button>
           <div class="qfeed" id="qFeed"></div>
-          <div class="btn-row">
+          <div class="btn-row" id="qHelpRow">
             <button class="btn" id="qHintBtn"></button>
             <button class="btn" id="qSol" data-i18n="btn_sol">Lösung zeigen</button>
           </div>
@@ -332,8 +337,10 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+<script src="vendor/three.min.js"></script>
+<script>window.THREE||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"><\/scr'+'ipt>');</script>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script>window.jspdf||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"><\/scr'+'ipt>');</script>
 <script>
 (function(){
 "use strict";
@@ -362,7 +369,7 @@ const UL=()=>unitSys==='cm'?'cm':unitSys==='m'?'m':D('LE','u');
 const T={
  de:{ brand:'Körper·Werkstatt',
    tab_explore:'Entdecken',tab_explore_sub:'bauen & messen',tab_net:'Netz & Fläche',tab_net_sub:'aufklappen',tab_quiz:'Test',tab_quiz_sub:'Aufgaben',
-   unit_label:'Einheit',diff_label:'Schwierigkeit',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse / Versand',name_lbl:'Name / Kürzel der Schüler:in',mail_lbl:'E-Mail der Lehrkraft',
+   unit_label:'Einheit',diff_label:'Schwierigkeit',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse',name_lbl:'Name / Kürzel der Schüler:in',cls_lbl:'Klasse / Kurs',mail_lbl:'E-Mail der Lehrkraft',share_btn:'🔗 Aufgabe als Link teilen',dsgvo:'Datenschutz: Bitte nur Kürzel/Pseudonyme verwenden. Alle Eingaben bleiben lokal auf diesem Gerät und werden nicht automatisch übertragen.',exam_banner:'<b>Prüfungsmodus aktiv:</b> Einstellungen gesperrt, keine Tipps und keine Lösung. Ein Versuch pro Aufgabe.',
    lib_label:'Bibliothek · anklicken zum Hinzufügen',scene_label:'Im 3D-Raum',empty_hint:'Noch keine Körper hinzugefügt.',display_label:'Darstellung',
    tg_edges:'Kanten',tg_solid:'Gefüllt',tg_grid:'Boden',tg_labels:'Maße',section_tg:'Querschnitt',section_height:'Höhe der Schnittebene',
    net_hint:'<b>So geht\u2019s:</b> Körper wählen, <b>Auffalten</b> drücken und dann jede Fläche antippen – ihre Flächeninhalte addieren sich zur gesamten Oberfläche <b>O</b>.',
@@ -371,7 +378,7 @@ const T={
    ov_vol:'Volumen V',ov_area:'Oberfläche O',ov_sec:'Querschnitt',hud:'Ziehen · drehen | Scrollen · zoomen',welcome:'← Wähle links einen Körper aus' },
  en:{ brand:'Solids·Workshop',
    tab_explore:'Explore',tab_explore_sub:'build & measure',tab_net:'Net & Area',tab_net_sub:'unfold',tab_quiz:'Test',tab_quiz_sub:'questions',
-   unit_label:'Units',diff_label:'Difficulty',count_label:'Number of questions',mode_label:'Mode',class_label:'Class / Send',name_lbl:'Student name / initials',mail_lbl:'Teacher e-mail',
+   unit_label:'Units',diff_label:'Difficulty',count_label:'Number of questions',mode_label:'Mode',class_label:'Class',name_lbl:'Student name / initials',cls_lbl:'Class / course',mail_lbl:'Teacher e-mail',share_btn:'🔗 Share task as a link',dsgvo:'Privacy: please use initials / pseudonyms only. All entries stay locally on this device and are not transmitted automatically.',exam_banner:'<b>Exam mode active:</b> settings locked, no hints and no solution. One attempt per question.',
    lib_label:'Library · tap to add',scene_label:'In the 3D scene',empty_hint:'No solids added yet.',display_label:'Display',
    tg_edges:'Edges',tg_solid:'Filled',tg_grid:'Floor',tg_labels:'Labels',section_tg:'Cross-section',section_height:'Cutting-plane height',
    net_hint:'<b>How it works:</b> pick a solid, press <b>Unfold</b>, then tap each face – their areas add up to the total surface area <b>O</b>.',
@@ -590,7 +597,7 @@ function setNetSolid(t){netSel=t;netDims=defaultDims(t);renderNetLib();renderNet
 /* ================= TEST ================= */
 const test={active:false,idx:0,total:30,right:0,wrong:0,finished:false,checked:false,results:[],score:0,streak:0,bestStreak:0,adaptiveLevel:1};
 const quiz={};
-let askSetting='rand',diffMode='rising',chosenCount=30,questionQueue=null,practiceMode=false,focusSolids=null;
+let askSetting='rand',diffMode='rising',chosenCount=30,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,classCode='';
 let qTimerId=null,qStart=0,qLimit=30,qTimedOut=false;
 
 function setQuizSolid(type,dims){while(groupQuiz.children.length){const o=groupQuiz.children.pop();o.traverse(c=>{if(c.geometry)c.geometry.dispose();if(c.material&&c.material.dispose)c.material.dispose();});}const m=makeSolidMeshes(type,dims);groupQuiz.add(m.obj);frameObject(m.size,m.height);}
@@ -749,58 +756,41 @@ function renderResults(){
     <div class="sec-lbl" style="margin-bottom:8px">${D('Nach Körper','By solid')}</div><div style="margin-bottom:16px">${statBars}</div>
     ${weak.length?`<button class="btn primary" id="btnFocus" style="margin-bottom:8px">${D('Schwächste Körper üben','Practice weakest solids')} (${weak.map(t=>SOLIDS[t].name[lang]).slice(0,2).join(', ')}${weak.length>2?'…':''})</button>`:''}
     <div class="rlist">${rows}</div>
-    <div class="sec-lbl" style="margin-bottom:8px">${D('Ergebnisse senden','Send results')}</div>
-    <button class="btn primary" id="btnDownload" style="margin-bottom:8px">${D('① PDF + JSON herunterladen','① Download PDF + JSON')}</button>
-    <a class="btn" id="mailLink" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px" href="#">${D('② E-Mail-App öffnen','② Open mail app')}</a>
-    <a class="btn" id="gmailLink" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-bottom:6px" href="#">${D('② Alternativ: Gmail im Browser','② Or: Gmail in the browser')}</a>
-    <div class="rsub" style="text-align:center;margin:0 0 14px">${D('Erst herunterladen, dann die beiden Dateien in der E-Mail anhängen.','Download first, then attach both files in the e-mail.')}</div>
+    <button class="btn primary" id="btnPdf" style="margin-bottom:8px">${D('📄 Als PDF speichern','📄 Save as PDF')}</button>
     ${missed?`<button class="btn" id="btnRetry" style="margin-bottom:8px">${D('Falsche wiederholen','Retry the wrong ones')} (${missed})</button>`:''}
-    <div class="btn-row"><button class="btn" id="btnPdf">${D('Nur PDF','PDF only')}</button><button class="btn" id="btnJson">${D('Nur JSON','JSON only')}</button></div>
-    <button class="btn" id="btnNewTest" style="margin-top:8px">${D('Neuer Test','New test')}</button>`;
+    <button class="btn" id="btnJson" style="margin-bottom:8px">${D('Daten als JSON (optional)','Data as JSON (optional)')}</button>
+    <button class="btn" id="btnNewTest">${D('Neuer Test','New test')}</button>`;
   if(weak.length){const bf=$('#btnFocus');if(bf)bf.addEventListener('click',safe(()=>{practiceMode=true;focusSolids=weak.slice();renderKindRow();startTest();}));}
-  (function(){
-    const sName=($('#stuName')&&$('#stuName').value.trim())||'';
-    const sMail=($('#teachMail')&&$('#teachMail').value.trim())||'';
-    const stamp=new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
-    const base='koerper-test_'+slug(sName)+'_'+stamp;
-    const subject=D('Körper-Test: ','Solids test: ')+(sName||'anonym')+' — '+test.score+' '+D('Punkte','points')+' ('+pct+'%)';
-    const body=D(
-`Hallo,
-
-anbei mein Ergebnis aus der Körper·Werkstatt.
-
-Name: ${sName||'(kein Name angegeben)'}
-Ergebnis: ${test.right}/${test.total} richtig (${pct}%)
-Punkte: ${test.score}  ·  Sterne: ${st}/5  ·  ${badge}
-Schwierigkeit: ${diffMode}  ·  Modus: ${practiceMode?'Üben':'Test'}
-
-Bitte die zwei heruntergeladenen Dateien anhängen:
-- ${base}.pdf
-- ${base}.json
-
-Viele Grüße`,
-`Hi,
-
-attached are my results from the Solids·Workshop.
-
-Name: ${sName||'(no name given)'}
-Result: ${test.right}/${test.total} correct (${pct}%)
-Score: ${test.score}  ·  Stars: ${st}/5  ·  ${badge}
-Difficulty: ${diffMode}  ·  Mode: ${practiceMode?'Practice':'Test'}
-
-Please attach the two downloaded files:
-- ${base}.pdf
-- ${base}.json
-
-Best regards`);
-    const ml=$('#mailLink');if(ml)ml.href='mailto:'+encodeURIComponent(sMail)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    const gl=$('#gmailLink');if(gl)gl.href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(sMail)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    const bd=$('#btnDownload');if(bd)bd.addEventListener('click',safe(()=>{exportJSON(base+'.json',sName||null);exportPDF(base+'.pdf',sName||null);}));
-  })();
   if(missed){const br=$('#btnRetry');if(br)br.addEventListener('click',safe(()=>{const q=missedSnapshots();if(q.length)startTest(q);}));}
   $('#btnPdf').addEventListener('click',safe(()=>exportPDF()));$('#btnJson').addEventListener('click',safe(()=>exportJSON()));$('#btnNewTest').addEventListener('click',safe(()=>{focusSolids=null;startTest();}));
 }
 function renderKindRow(){const opts=[['test',D('Test · Zeit & Punkte','Test · timed')],['practice',D('Üben · ohne Zeit','Practice · no timer')]];$('#qKindRow').innerHTML=opts.map(o=>`<button data-kind="${o[0]}" class="${(o[0]==='practice')===practiceMode?'active':''}" style="justify-content:center"><span class="nm" style="font-size:11.5px">${o[1]}</span></button>`).join('');}
+function curClass(){return(($('#clsName')&&$('#clsName').value.trim())||classCode||'');}
+function parseParams(){
+  let p;try{p=new URLSearchParams(location.search);}catch(e){return;}
+  const g=k=>p.get(k);
+  const L=g('lang');if(L==='en'||L==='de')lang=L;
+  const m=g('mode');if(m==='practice')practiceMode=true;else if(m==='test')practiceMode=false;
+  const lv=g('level');if(['1','2','3','rising','adaptive'].indexOf(lv)>=0)diffMode=lv;
+  const c=parseInt(g('count'),10);if([10,20,30].indexOf(c)>=0)chosenCount=c;
+  const a=g('ask');if(['rand','V','O'].indexOf(a)>=0)askSetting=a;
+  const cl=g('class');if(cl)classCode=cl.slice(0,40);
+  if(g('exam')==='1'){examMode=true;practiceMode=false;}
+}
+function applyExamUI(){
+  const on=examMode,s=$('#qSettings');if(s)s.style.display=on?'none':'';
+  const hr=$('#qHelpRow');if(hr)hr.style.display=on?'none':'';
+  const eb=$('#examBanner');if(eb)eb.style.display=on?'block':'none';
+}
+function shareLink(){
+  const p=new URLSearchParams();
+  p.set('mode',practiceMode?'practice':'test');p.set('level',diffMode);p.set('count',String(chosenCount));p.set('ask',askSetting);p.set('lang',lang);
+  const cls=curClass();if(cls)p.set('class',cls);
+  const url=location.origin+location.pathname+'?'+p.toString();
+  const done=()=>{const sh=$('#qShare');if(sh){const old=sh.textContent;sh.textContent=D('✓ Link kopiert','✓ Link copied');setTimeout(()=>{sh.textContent=old;},1800);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,()=>window.prompt(D('Link kopieren:','Copy link:'),url));}
+  else window.prompt(D('Link kopieren:','Copy link:'),url);
+}
 function renderCountRow(){const opts=[10,20,30];$('#qCountRow').innerHTML=opts.map(n=>`<button data-count="${n}" class="${n===chosenCount?'active':''}" style="justify-content:center"><span class="nm" style="font-size:13px">${n}</span></button>`).join('');}
 function renderDiffRow(){
   const lv=[['1',D('Stufe 1','Level 1')],['2',D('Stufe 2','Level 2')],['3',D('Stufe 3','Level 3')]];
@@ -815,49 +805,8 @@ function download(filename,blob){const a=document.createElement('a');a.href=URL.
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 function slug(s){return(s||'').toString().trim().replace(/[^\w\u00c0-\u024f-]+/g,'_').replace(/^_+|_+$/g,'')||'anonym';}
-function sendResults(){
-  const name=($('#stuName')&&$('#stuName').value.trim())||'';
-  const mail=($('#teachMail')&&$('#teachMail').value.trim())||'';
-  const stamp=new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
-  const base='koerper-test_'+slug(name)+'_'+stamp;
-  const pct=Math.round(test.right/test.total*100),st=starsFor(pct);
-  setTimeout(safe(()=>exportJSON(base+'.json',name||null)),0);
-  setTimeout(safe(()=>exportPDF(base+'.pdf',name||null)),450);
-  setTimeout(safe(()=>{
-    const subject=D('Körper-Test: ','Solids test: ')+(name||'anonym')+' — '+test.score+' '+D('Punkte','points')+' ('+pct+'%)';
-    const body=D(
-`Hallo,
-
-anbei mein Ergebnis aus der Körper·Werkstatt.
-
-Name: ${name||'(kein Name angegeben)'}
-Ergebnis: ${test.right}/${test.total} richtig (${pct}%)
-Punkte: ${test.score}  ·  Sterne: ${st}/5  ·  ${badgeFor(st)}
-Schwierigkeit: ${diffMode}  ·  Modus: ${practiceMode?'Üben':'Test'}
-
-Bitte die zwei soeben heruntergeladenen Dateien anhängen:
-- ${base}.pdf
-- ${base}.json
-
-Viele Grüße`,
-`Hi,
-
-attached are my results from the Solids·Workshop.
-
-Name: ${name||'(no name given)'}
-Result: ${test.right}/${test.total} correct (${pct}%)
-Score: ${test.score}  ·  Stars: ${st}/5  ·  ${badgeFor(st)}
-Difficulty: ${diffMode}  ·  Mode: ${practiceMode?'Practice':'Test'}
-
-Please attach the two files just downloaded:
-- ${base}.pdf
-- ${base}.json
-
-Best regards`);
-    window.location.href='mailto:'+encodeURIComponent(mail)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-  }),950);
-}
-function exportJSON(filename,studentName){const name=studentName!==undefined?studentName:(($('#stuName')&&$('#stuName').value.trim())||null);const pct=Math.round(test.right/test.total*100),st=starsFor(pct);const data={app:'Koerper-Werkstatt',type:'test-result',date:new Date().toISOString(),student:name||null,language:lang,difficulty:diffMode,mode:practiceMode?'practice':'test',askSetting,total:test.total,correct:test.right,wrong:test.wrong,percent:pct,score:test.score,stars:st,badge:badgeFor(st),bestStreak:test.bestStreak,questions:test.results.map(r=>({n:r.n,solid:r.type,kind:r.kind,level:r.level,ask:r.ask,given:r.given,correct:Math.round(r.correct*100)/100,answer:r.answer,ok:r.ok,points:r.points,hint:r.hint}))};download(filename||'koerper-test.json',new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));}
+function defName(ext){const n=($('#stuName')&&$('#stuName').value.trim())||'';const c=curClass();return 'koerper-test_'+slug([c,n].filter(Boolean).join('_')||'anonym')+'_'+new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')+'.'+ext;}
+function exportJSON(filename,studentName){const name=studentName!==undefined?studentName:(($('#stuName')&&$('#stuName').value.trim())||null);const pct=Math.round(test.right/test.total*100),st=starsFor(pct);const data={app:'Koerper-Werkstatt',type:'test-result',date:new Date().toISOString(),student:name||null,class:curClass()||null,language:lang,difficulty:diffMode,mode:practiceMode?'practice':'test',examMode,askSetting,total:test.total,correct:test.right,wrong:test.wrong,percent:pct,score:test.score,stars:st,badge:badgeFor(st),bestStreak:test.bestStreak,questions:test.results.map(r=>({n:r.n,solid:r.type,kind:r.kind,level:r.level,ask:r.ask,given:r.given,correct:Math.round(r.correct*100)/100,answer:r.answer,ok:r.ok,points:r.points,hint:r.hint}))};download(filename||defName('json'),new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));}
 function exportPDF(filename,studentName){
   const stuName=studentName!==undefined?studentName:(($('#stuName')&&$('#stuName').value.trim())||null);
   if(!window.jspdf||!window.jspdf.jsPDF){alert(D('PDF-Bibliothek nicht geladen (Internet nötig).','PDF library not loaded (internet required).'));return;}
@@ -867,7 +816,8 @@ function exportPDF(filename,studentName){
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(90);
   doc.text((D('Datum: ','Date: '))+new Date().toLocaleString(loc()),M,y);
   doc.text((D('Schwierigkeit: ','Difficulty: '))+diffMode+'   '+(D('Modus: ','Mode: '))+(practiceMode?D('Üben','Practice'):'Test'),M+300,y);y+=16;
-  if(stuName){doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(20);doc.text((D('Name: ','Name: '))+stuName,M,y);y+=16;}
+  if(stuName){doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(20);doc.text((D('Name: ','Name: '))+stuName+(curClass()?'    '+D('Klasse: ','Class: ')+curClass():''),M,y);y+=16;}
+  else if(curClass()){doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(20);doc.text(D('Klasse: ','Class: ')+curClass(),M,y);y+=16;}
   doc.setTextColor(20);doc.setFont('helvetica','bold');doc.setFontSize(12);
   doc.text(D(`Punkte: ${test.score}   ·   ${test.right} / ${test.total} richtig (${pct}%)   ·   Sterne: ${st} / 5   ·   ${badgeFor(st)}`,`Score: ${test.score}   ·   ${test.right} / ${test.total} correct (${pct}%)   ·   Stars: ${st} / 5   ·   ${badgeFor(st)}`),M,y);y+=10;
   doc.setDrawColor(210);doc.line(M,y,559,y);y+=16;
@@ -892,7 +842,7 @@ function exportPDF(filename,studentName){
     y+=14.5;
   });
   doc.setTextColor(150);doc.setFontSize(8);doc.text('V: '+UV()+'   O: '+UA()+'   ⇄ = '+D('Rückwärtsaufgabe','reverse task'),M,Math.min(y+8,832));
-  doc.save(filename||'koerper-test.pdf');
+  doc.save(filename||defName('pdf'));
 }
 
 /* ================= MODE + EVENTS ================= */
@@ -917,7 +867,7 @@ function setAppMode(m){
   if(m==='quiz'){if(!test.active){startTest();}else{if(test.finished){renderResults();}else{setQuizSolid(quiz.type,quiz.dims);renderQuiz();if(!test.checked)startTimer();}renderTestHeader();}}
 }
 function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
-function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');const tm=$('#teachMail');if(tm)tm.placeholder=D('lehrer@schule.de','teacher@school.org');renderFooter();refreshAll();updateSection();}
+function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');renderFooter();refreshAll();updateSection();}
 const SOURCES=[
  {cite:'Hattie, J. & Timperley, H. (2007). The Power of Feedback. Review of Educational Research, 77(1), 81–112.',url:'https://doi.org/10.3102/003465430298487',deWhy:'Diagnostisches Feedback: Rückmeldung wirkt am stärksten, wenn sie erklärt, warum etwas falsch ist – nicht nur, dass es falsch ist.',enWhy:'Diagnostic feedback: feedback works best when it explains why something is wrong, not merely that it is.'},
  {cite:'Black, P. & Wiliam, D. (1998). Assessment and Classroom Learning. Assessment in Education, 5(1), 7–74.',url:'https://doi.org/10.1080/0969595980050102',deWhy:'Formatives Prüfen mit sofortiger Rückmeldung steigert die Leistung deutlich – Basis für Übungsmodus und Schwächen-Statistik.',enWhy:'Formative assessment with immediate feedback substantially improves performance – basis for the practice mode and weakness stats.'},
@@ -964,6 +914,7 @@ $('#qCountRow').addEventListener('click',safe(e=>{const b=e.target.closest('[dat
 $('#qDiffRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qaskRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-ask]');if(!b)return;askSetting=b.dataset.ask;focusSolids=null;renderAskRow();startTest();}));
+$('#qShare').addEventListener('click',safe(shareLink));
 $('#qCheck').addEventListener('click',safe(checkAnswer));
 $('#qHintBtn').addEventListener('click',safe(useHint));
 $('#qSol').addEventListener('click',safe(showQuizSolution));
@@ -974,7 +925,7 @@ document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',s
 $('#srcToggle').addEventListener('click',safe(()=>{$('#sources').classList.toggle('show');renderFooter();}));
 
 /* boot */
-try{ renderLib();renderChips();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const tm=$('#teachMail');if(tm){tm.value=lsGet('kw_mail')||'';tm.addEventListener('input',()=>lsSet('kw_mail',tm.value));}})();applyLang('de');setAppMode('explore'); }catch(err){ showFatal(err); }
+try{ parseParams();renderLib();renderChips();renderKindRow();renderCountRow();renderDiffRow();renderAskRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const cl=$('#clsName');if(cl){cl.value=classCode||lsGet('kw_class')||'';cl.addEventListener('input',()=>lsSet('kw_class',cl.value));}})();applyLang(lang);applyExamUI();setAppMode('explore'); }catch(err){ showFatal(err); }
 })();
 </script>
 </body>

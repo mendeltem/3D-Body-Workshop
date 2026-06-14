@@ -43,12 +43,9 @@ The app has three modes, switchable via the tabs at the top:
 
 ### Classroom use
 
-The Test tab has fields for the **student's name** and the **teacher's e-mail** (stored locally in the browser). At the end of a test:
-1. **Download PDF + JSON** (filename = name + date).
-2. **Open mail app** (a real `mailto:` link) — or **Open Gmail in the browser** if no mail app is installed.
-3. Attach the two downloaded files in the e-mail and send.
+The Test tab has fields for the **student's name** and **class** (stored locally in the browser). At the end of a test, click **📄 Save as PDF** — a clean report (name, class, score, per-question breakdown) is downloaded. Optionally, **Data as JSON** exports the same results in machine-readable form for analysis.
 
-> ⚠️ For security reasons a static web page **cannot attach files to an e-mail automatically** — download first, then attach manually. (A sphere, by the way, has no real net; see the note in the Net tab.)
+> A sphere, by the way, has no real net; see the note in the Net tab.
 
 **Analysing results (Python / pandas)** — put all JSON files in one folder:
 
@@ -62,10 +59,16 @@ df_q = pd.json_normalize(rows, "questions",
         ["student", "date", "difficulty", "mode"])               # one row per question
 ```
 
+### Teacher options
+
+- **Share a task as a link:** set mode/difficulty/count/question type, then click **🔗 Share task as a link**. This copies a URL containing the settings, e.g. `?mode=test&level=2&count=20&ask=V&class=8b&lang=de`. Hand it out (or turn it into a QR code) so the whole class starts with identical settings.
+- **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
+- **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
+
 ### Getting started
 
 **Locally:** download `index.html` and open it in a browser (double-click).
-**Offline?** Yes — except the **PDF export** (loads jsPDF from a CDN). JSON export always works.
+**Offline?** Yes. The 3D and PDF libraries ship locally in the **`vendor/`** folder — upload that folder together with `index.html` so the app works without any internet (important on school networks that block external servers). If `vendor/` is missing, the app falls back to a CDN (needs internet).
 
 **Online via GitHub Pages**
 1. The app must be named **`index.html`** in the repo (otherwise the URL shows a 404 — Pages always looks for `index.html` first).
@@ -116,12 +119,9 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 
 ### Einsatz im Unterricht
 
-Im Test-Tab gibt es Felder für **Name** der Schüler:in und **E-Mail der Lehrkraft** (werden lokal im Browser gemerkt). Am Ende des Tests:
-1. **PDF + JSON herunterladen** (Dateiname = Name + Datum).
-2. **E-Mail-App öffnen** (echter `mailto:`-Link) — oder **Gmail im Browser öffnen**, falls keine Mail-App installiert ist.
-3. Die zwei heruntergeladenen Dateien in der E-Mail anhängen und absenden.
+Im Test-Tab gibt es Felder für **Name** der Schüler:in und **Klasse** (werden lokal im Browser gemerkt). Am Ende des Tests auf **📄 Als PDF speichern** klicken — ein sauberes Protokoll (Name, Klasse, Punkte, Aufgabenübersicht) wird heruntergeladen. Optional exportiert **Daten als JSON** dieselben Ergebnisse maschinenlesbar zur Auswertung.
 
-> ⚠️ Aus Sicherheitsgründen kann eine reine Webseite **keine Dateien automatisch an eine E-Mail anhängen** — erst herunterladen, dann manuell anhängen. (Eine Kugel hat übrigens kein echtes Netz; siehe Hinweis im Netz-Tab.)
+> Eine Kugel hat übrigens kein echtes Netz; siehe Hinweis im Netz-Tab.
 
 **Ergebnisse auswerten (Python / pandas)** — alle JSON in einen Ordner legen:
 
@@ -135,10 +135,16 @@ df_q = pd.json_normalize(rows, "questions",
         ["student", "date", "difficulty", "mode"])               # eine Zeile pro Aufgabe
 ```
 
+### Optionen für Lehrkräfte
+
+- **Aufgabe als Link teilen:** Modus/Schwierigkeit/Anzahl/Frageart einstellen, dann **🔗 Aufgabe als Link teilen** klicken. Das kopiert eine URL mit den Einstellungen, z. B. `?mode=test&level=2&count=20&ask=V&class=8b&lang=de`. So weitergeben (oder als QR-Code), damit die ganze Klasse identisch startet.
+- **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
+- **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
+
 ### Loslegen
 
 **Lokal:** `index.html` herunterladen und im Browser öffnen (Doppelklick).
-**Offline?** Ja — bis auf den **PDF-Export** (lädt jsPDF vom CDN). Der JSON-Export funktioniert immer.
+**Offline?** Ja. Die 3D- und PDF-Bibliothek liegen lokal im Ordner **`vendor/`** — diesen Ordner zusammen mit `index.html` hochladen, dann läuft alles ohne Internet (wichtig in Schulnetzen, die externe Server blockieren). Fehlt `vendor/`, weicht die App auf ein CDN aus (braucht Internet).
 
 **Online über GitHub Pages**
 1. Die App muss als **`index.html`** im Repo liegen (sonst zeigt die Adresse einen 404 — GitHub Pages sucht immer zuerst `index.html`).
