@@ -9,6 +9,16 @@ Everything lives in **a single HTML file**: no server, no build, no install. Wor
 
 > *Created by Uchralt Temuulen — feedback welcome / Feedback willkommen: [LinkedIn](https://www.linkedin.com/in/uchralt-temuulen-31a3a570)*
 
+### 📸 Screenshots
+
+**Entdecken / Explore** — build solids and read volume *V* & surface area *O* live · *Körper bauen, Volumen und Oberfläche live ablesen*
+
+![Explore / Entdecken mode](1.PNG)
+
+**Test / Quiz** — timed practice with instant, diagnostic feedback · *Üben mit sofortiger, diagnostischer Rückmeldung*
+
+![Test / Quiz mode](2.PNG)
+
 **Language / Sprache:** [🇬🇧 English](#-english) · [🇩🇪 Deutsch](#-deutsch) · [📚 References / Quellen](#-references--wissenschaftliche-grundlagen)
 
 ---
@@ -61,7 +71,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Teacher options
 
-- **Share a task as a link:** set mode/difficulty/count/question type, then click **🔗 Share task as a link**. This copies a URL containing the settings, e.g. `?mode=test&level=2&count=20&ask=V&class=8b&lang=de`. Hand it out (or turn it into a QR code) so the whole class starts with identical settings.
+- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
 - **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
 - **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
 
@@ -137,7 +147,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Optionen für Lehrkräfte
 
-- **Aufgabe als Link teilen:** Modus/Schwierigkeit/Anzahl/Frageart einstellen, dann **🔗 Aufgabe als Link teilen** klicken. Das kopiert eine URL mit den Einstellungen, z. B. `?mode=test&level=2&count=20&ask=V&class=8b&lang=de`. So weitergeben (oder als QR-Code), damit die ganze Klasse identisch startet.
+- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
 - **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
 - **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
 
