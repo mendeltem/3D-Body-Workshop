@@ -373,6 +373,9 @@
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qKindRow"></div>
         <div class="sec-lbl" data-i18n="count_label">Aufgaben</div>
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qCountRow"></div>
+        <div class="sec-lbl" data-i18n="region_label">Bundesland &amp; Schulform</div>
+        <select id="qLand" style="width:100%;margin-bottom:10px;background:var(--panel-3);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;font-size:13px"></select>
+        <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qSchulformRow"></div>
         <div class="sec-lbl" data-i18n="grade_label">Jahrgang (Lehrplan)</div>
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr 1fr;margin-bottom:16px" id="qGradeRow"></div>
         <div class="sec-lbl" data-i18n="diff_label">Schwierigkeit</div>
@@ -444,7 +447,7 @@ const UL=()=>unitSys==='mm'?'mm':unitSys==='dm'?'dm':unitSys==='m'?'m':'cm';
 const T={
  de:{ brand:'Körper·Werkstatt',
    tab_explore:'Entdecken',tab_explore_sub:'bauen & messen',tab_net:'Netz & Fläche',tab_net_sub:'aufklappen',tab_quiz:'Test',tab_quiz_sub:'Aufgaben',
-   unit_label:'Einheit',diff_label:'Schwierigkeit',grade_label:'Jahrgang (Lehrplan)',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse',name_lbl:'Name / Kürzel der Schüler:in',cls_lbl:'Klasse / Kurs',mail_lbl:'E-Mail der Lehrkraft',share_btn:'🔗 Aufgabe als Link teilen',dsgvo:'Datenschutz: Bitte nur Kürzel/Pseudonyme verwenden. Alle Eingaben bleiben lokal auf diesem Gerät und werden nicht automatisch übertragen.',exam_banner:'<b>Prüfungsmodus aktiv:</b> Einstellungen gesperrt, keine Tipps und keine Lösung. Ein Versuch pro Aufgabe.',
+   unit_label:'Einheit',diff_label:'Schwierigkeit',grade_label:'Jahrgang (Lehrplan)',region_label:'Bundesland & Schulform',count_label:'Anzahl Aufgaben',mode_label:'Modus',class_label:'Klasse',name_lbl:'Name / Kürzel der Schüler:in',cls_lbl:'Klasse / Kurs',mail_lbl:'E-Mail der Lehrkraft',share_btn:'🔗 Aufgabe als Link teilen',dsgvo:'Datenschutz: Bitte nur Kürzel/Pseudonyme verwenden. Alle Eingaben bleiben lokal auf diesem Gerät und werden nicht automatisch übertragen.',exam_banner:'<b>Prüfungsmodus aktiv:</b> Einstellungen gesperrt, keine Tipps und keine Lösung. Ein Versuch pro Aufgabe.',
    lib_label:'Bibliothek · anklicken zum Hinzufügen',scene_label:'Im 3D-Raum',empty_hint:'Noch keine Körper hinzugefügt.',display_label:'Darstellung',
    tg_edges:'Kanten',tg_solid:'Gefüllt',tg_grid:'Boden',tg_labels:'Maße',tg_axes:'Achsen',tg_ref:'Vergleich',ref_pick:'Vergleichsobjekte (mehrere möglich)',section_tg:'Querschnitt',section_height:'Höhe der Schnittebene',fill_layers:'Schichten',
    net_hint:'<b>So geht\u2019s:</b> Körper wählen, <b>Auffalten</b> drücken und dann jede Fläche antippen – ihre Flächeninhalte addieren sich zur gesamten Oberfläche <b>O</b>.',
@@ -453,7 +456,7 @@ const T={
    ov_vol:'Volumen V',ov_area:'Oberfläche O',ov_sec:'Querschnitt',hud:'Ziehen · drehen | Scrollen · zoomen',welcome:'← Wähle links einen Körper aus' },
  en:{ brand:'Solids·Workshop',
    tab_explore:'Explore',tab_explore_sub:'build & measure',tab_net:'Net & Area',tab_net_sub:'unfold',tab_quiz:'Test',tab_quiz_sub:'questions',
-   unit_label:'Units',diff_label:'Difficulty',grade_label:'Grade (curriculum)',count_label:'Number of questions',mode_label:'Mode',class_label:'Class',name_lbl:'Student name / initials',cls_lbl:'Class / course',mail_lbl:'Teacher e-mail',share_btn:'🔗 Share task as a link',dsgvo:'Privacy: please use initials / pseudonyms only. All entries stay locally on this device and are not transmitted automatically.',exam_banner:'<b>Exam mode active:</b> settings locked, no hints and no solution. One attempt per question.',
+   unit_label:'Units',diff_label:'Difficulty',grade_label:'Grade (curriculum)',region_label:'State & school type',count_label:'Number of questions',mode_label:'Mode',class_label:'Class',name_lbl:'Student name / initials',cls_lbl:'Class / course',mail_lbl:'Teacher e-mail',share_btn:'🔗 Share task as a link',dsgvo:'Privacy: please use initials / pseudonyms only. All entries stay locally on this device and are not transmitted automatically.',exam_banner:'<b>Exam mode active:</b> settings locked, no hints and no solution. One attempt per question.',
    lib_label:'Library · tap to add',scene_label:'In the 3D scene',empty_hint:'No solids added yet.',display_label:'Display',
    tg_edges:'Edges',tg_solid:'Filled',tg_grid:'Floor',tg_labels:'Labels',tg_axes:'Axes',tg_ref:'Reference',ref_pick:'Reference objects (pick several)',section_tg:'Cross-section',section_height:'Cutting-plane height',fill_layers:'Layers',
    net_hint:'<b>How it works:</b> pick a solid, press <b>Unfold</b>, then tap each face – their areas add up to the total surface area <b>O</b>.',
@@ -962,18 +965,32 @@ function setNetSolid(t){netSel=t;netDims=defaultDims(t);renderNetLib();renderNet
 /* ================= TEST ================= */
 const test={active:false,idx:0,total:30,right:0,wrong:0,finished:false,checked:false,results:[],score:0,streak:0,bestStreak:0,adaptiveLevel:1};
 const quiz={};
-let askSetting='rand',diffMode='2',gradeSel='g10',chosenCount=10,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,helpAllowed=true,classCode='',storyMode='mix';
+let askSetting='rand',diffMode='2',gradeSel='g10',schulformSel='gym',bundeslandSel='',chosenCount=10,questionQueue=null,practiceMode=false,focusSolids=null,examMode=false,helpAllowed=true,classCode='',storyMode='mix';
 function storyProb(){return storyMode==='off'?0:storyMode==='many'?0.8:0.4;}
 let qTimerId=null,qStart=0,qLimit=30,qTimedOut=false;
 
-const GRADES=[
-  {id:'g6',de:'Kl. 5/6',en:'Gr. 5/6',solids:['wuerfel','quader']},
-  {id:'g8',de:'Kl. 7/8',en:'Gr. 7/8',solids:['wuerfel','quader','prisma','zylinder']},
-  {id:'g9',de:'Kl. 9',en:'Gr. 9',solids:['wuerfel','quader','prisma','zylinder','pyramide','kegel']},
-  {id:'g10',de:'Kl. 10',en:'Gr. 10',solids:['wuerfel','quader','prisma','zylinder','pyramide','kegel','kugel']}
+const BUNDESLAENDER=[
+  {id:'bw',name:'Baden-Württemberg'},{id:'by',name:'Bayern'},{id:'be',name:'Berlin'},{id:'bb',name:'Brandenburg'},
+  {id:'hb',name:'Bremen'},{id:'hh',name:'Hamburg'},{id:'he',name:'Hessen'},{id:'mv',name:'Mecklenburg-Vorpommern'},
+  {id:'ni',name:'Niedersachsen'},{id:'nw',name:'Nordrhein-Westfalen'},{id:'rp',name:'Rheinland-Pfalz'},{id:'sl',name:'Saarland'},
+  {id:'sn',name:'Sachsen'},{id:'st',name:'Sachsen-Anhalt'},{id:'sh',name:'Schleswig-Holstein'},{id:'th',name:'Thüringen'}
 ];
+const SCHULFORMEN=[{id:'gym',de:'Gymnasium',en:'Gymnasium'},{id:'real',de:'Realschule',en:'Realschule'},{id:'gms',de:'Gesamt-/Mittelsch.',en:'Comprehensive'}];
+const _BASIS=['wuerfel','quader'],_SAEULEN=['prisma','zylinder'],_SPITZ=['pyramide','kegel'],_KUGEL=['kugel'];
+function gradesFor(sf){
+  const B=_BASIS,S=B.concat(_SAEULEN),P=S.concat(_SPITZ),K=P.concat(_KUGEL);
+  if(sf==='gms')return[{id:'g56',de:'Kl. 5/6',en:'Gr. 5/6',solids:B},{id:'g9',de:'Kl. 9',en:'Gr. 9',solids:S},{id:'g10',de:'Kl. 10',en:'Gr. 10',solids:K}];
+  if(sf==='real')return[{id:'g56',de:'Kl. 5/6',en:'Gr. 5/6',solids:B},{id:'g8',de:'Kl. 8',en:'Gr. 8',solids:S},{id:'g9',de:'Kl. 9',en:'Gr. 9',solids:P},{id:'g10',de:'Kl. 10',en:'Gr. 10',solids:K}];
+  return[{id:'g56',de:'Kl. 5/6',en:'Gr. 5/6',solids:B},{id:'g78',de:'Kl. 7/8',en:'Gr. 7/8',solids:S},{id:'g9',de:'Kl. 9',en:'Gr. 9',solids:P},{id:'g10',de:'Kl. 10',en:'Gr. 10',solids:K}];
+}
+let GRADES=gradesFor('gym');
+function applySchulform(sf){schulformSel=sf;GRADES=gradesFor(sf);if(!GRADES.some(g=>g.id===gradeSel))gradeSel=GRADES[GRADES.length-1].id;}
+function landName(){const b=BUNDESLAENDER.find(x=>x.id===bundeslandSel);return b?b.name:'';}
+function schulformName(){const s=SCHULFORMEN.find(x=>x.id===schulformSel);return s?s[lang]:'';}
 function gradeDef(){return GRADES.find(g=>g.id===gradeSel)||GRADES[GRADES.length-1];}
 function gradeSolids(){return gradeDef().solids.filter(t=>SOLIDS[t]);}
+/* Umkehraufgaben nur nach Größen, die LINEAR im Volumen stehen (reines Dividieren, keine Wurzel) – Sek-I-konform */
+const LINREV={quader:['a','b','c'],prisma:['h'],zylinder:['h'],pyramide:['h'],kegel:['h']};
 function curDiff(){const n=parseInt(diffMode,10);return(n>=1&&n<=3)?n:2;}
 function diffLabel(n){return n===1?D('leicht','easy'):n===3?D('schwer','hard'):D('mittel','medium');}
 function setQuizSolid(type,dims){while(groupQuiz.children.length){const o=groupQuiz.children.pop();o.traverse(c=>{if(c.geometry)c.geometry.dispose();if(c.material&&c.material.dispose)c.material.dispose();});}const m=makeSolidMeshes(type,dims);groupQuiz.add(m.obj);frameObject(m.size,m.height);}
@@ -985,14 +1002,49 @@ function timeLimitFor(q){return(120+q.level*30)+(q.kind==='reverse'?30:0)+(q.kin
 function uStr(uKey,measure){return uKey+(measure==='V'?'³':'²');}
 function pickTargetUnit(u){const order=['mm','cm','dm','m'],i=order.indexOf(u),cand=[];if(i>0)cand.push(order[i-1]);if(i<order.length-1)cand.push(order[i+1]);return cand[Math.floor(Math.random()*cand.length)]||order[(i+1)%order.length];}
 const CONTEXT={
-  wuerfel:{V:['Ein würfelförmiger Umzugskarton soll gefüllt werden. Wie viel passt hinein?','A cube-shaped moving box is being filled. How much fits inside?'],O:['Der Würfel wird rundum gestrichen. Wie groß ist die zu streichende Fläche?','The cube is painted all over. How large is the area to paint?']},
-  quader:{V:['Ein Aquarium hat diese Maße. Wie viel Wasser passt hinein?','An aquarium has these dimensions. How much water fits inside?'],O:['Ein quaderförmiges Geschenk wird eingepackt. Wie viel Papier braucht man (ohne Überlappung)?','A box-shaped present is wrapped. How much paper is needed (no overlap)?']},
-  zylinder:{V:['Eine zylindrische Konservendose. Wie viel passt hinein?','A cylindrical can. How much fits inside?'],O:['Wie viel Blech braucht man für die Dose (mit Deckel und Boden)?','How much sheet metal is needed for the can (lid and base included)?']},
-  kegel:{V:['Ein Eishörnchen wird randvoll gefüllt. Wie viel Eis passt hinein?','An ice-cream cone is filled to the brim. How much fits inside?']},
-  pyramide:{V:['Ein Zelt hat die Form einer Pyramide. Wie groß ist das Raumvolumen?','A tent is shaped like a pyramid. What is its volume?']},
-  kugel:{V:['Ein Ball wird aufgepumpt. Wie viel Luft passt hinein?','A ball is inflated. How much air fits inside?'],O:['Wie viel Leder braucht man für die Außenhülle des Balls?','How much leather is needed for the ball\u2019s outer surface?']},
-  prisma:{V:['Eine Toblerone-Packung (dreiseitiges Prisma). Wie groß ist das Volumen?','A Toblerone pack (triangular prism). What is its volume?']}
+  wuerfel:{
+    V:[['Ein würfelförmiger Umzugskarton wird randvoll gepackt. Wie viel Stauraum bietet er?','A cube-shaped moving box is packed to the brim. How much storage space does it offer?'],
+       ['Ein Aquarium in Würfelform wird gefüllt. Wie viel Wasser fasst es?','A cube-shaped aquarium is filled. How much water does it hold?'],
+       ['Aus wie vielen Einheitswürfeln besteht dieser große Würfel?','How many unit cubes make up this large cube?']],
+    O:[['Ein würfelförmiges Geschenk wird in Folie eingewickelt. Wie viel Folie braucht man (ohne Überlappung)?','A cube-shaped gift is wrapped in foil. How much foil is needed (no overlap)?'],
+       ['Ein Holzwürfel wird komplett lackiert. Wie groß ist die zu lackierende Fläche?','A wooden cube is fully varnished. How large is the area to varnish?']]
+  },
+  quader:{
+    V:[['Ein Aquarium hat diese Maße. Wie viel Wasser passt hinein?','An aquarium has these dimensions. How much water fits inside?'],
+       ['Ein Frachtcontainer soll beladen werden. Wie groß ist sein Laderaum?','A shipping container is being loaded. How large is its cargo space?'],
+       ['Wie viel Luft ist in einem Klassenraum mit diesen Maßen?','How much air is in a classroom with these dimensions?']],
+    O:[['Ein quaderförmiges Paket wird mit Packpapier umhüllt. Wie viel Papier braucht man?','A box-shaped parcel is wrapped in paper. How much paper is needed?'],
+       ['Alle Außenseiten einer Kiste werden beklebt. Wie groß ist die Gesamtfläche?','All outer sides of a crate are covered. What is the total area?']]
+  },
+  zylinder:{
+    V:[['Eine zylindrische Konservendose. Wie viel Inhalt passt hinein?','A cylindrical can. How much content fits inside?'],
+       ['Eine Regentonne wird gefüllt. Wie viel Wasser fasst sie?','A rain barrel is filled. How much water does it hold?'],
+       ['Wie viel Wachs steckt in dieser zylindrischen Kerze?','How much wax is in this cylindrical candle?']],
+    O:[['Aus wie viel Blech wird die Dose hergestellt (mit Deckel und Boden)?','How much sheet metal is the can made from (lid and base included)?'],
+       ['Ein zylindrischer Tank wird komplett gestrichen. Wie groß ist die Fläche?','A cylindrical tank is fully painted. How large is the area?']]
+  },
+  pyramide:{
+    V:[['Ein Zelt hat die Form einer Pyramide. Wie groß ist sein Rauminhalt?','A tent is shaped like a pyramid. What is its interior volume?'],
+       ['Ein pyramidenförmiger Trichter wird befüllt. Wie viel passt hinein?','A pyramid-shaped hopper is filled. How much fits inside?']]
+  },
+  kegel:{
+    V:[['Ein Eishörnchen wird randvoll gefüllt. Wie viel Eis passt hinein?','An ice-cream cone is filled to the brim. How much ice cream fits?'],
+       ['Sand rieselt zu einem kegelförmigen Haufen. Wie groß ist sein Volumen?','Sand trickles into a cone-shaped pile. What is its volume?'],
+       ['Wie viel passt in diesen kegelförmigen Trichter?','How much fits into this cone-shaped funnel?']]
+  },
+  kugel:{
+    V:[['Ein Ball wird aufgepumpt. Wie viel Luft passt hinein?','A ball is inflated. How much air fits inside?'],
+       ['Eine Kugel Eis – wie viel Eis ist das?','A scoop of ice cream – how much ice cream is that?']],
+    O:[['Wie viel Leder braucht man für die Außenhülle des Balls?','How much leather is needed for the ball\u2019s outer surface?'],
+       ['Ein Globus wird vollständig bedruckt. Wie groß ist die Oberfläche?','A globe is printed all over. How large is its surface?']]
+  },
+  prisma:{
+    V:[['Eine Toblerone-Packung (dreiseitiges Prisma). Wie groß ist ihr Volumen?','A Toblerone pack (triangular prism). What is its volume?'],
+       ['Ein Zelt mit dreieckigem Querschnitt. Wie groß ist der Rauminhalt?','A tent with a triangular cross-section. What is its volume?'],
+       ['Eine keilförmige Rampe. Wie viel Material steckt darin?','A wedge-shaped ramp. How much material does it contain?']]
+  }
 };
+function pickStory(type,ask){const arr=CONTEXT[type]&&CONTEXT[type][ask];if(!arr||!arr.length)return null;return arr[Math.floor(Math.random()*arr.length)][lang];}
 function correctText(){if(quiz.kind==='reverse')return fmt(quiz.correct)+' '+UL();if(quiz.kind==='convert')return fmt(quiz.correct)+' '+uStr(quiz.cvToU,quiz.cvMeasure);return fmt(quiz.correct)+' '+(quiz.ask==='V'?UV():UA());}
 
 function stopTimer(){if(qTimerId){clearInterval(qTimerId);qTimerId=null;}}
@@ -1023,11 +1075,12 @@ function newQuestion(){
   if((askSetting!=='O')&&roll<revChance)kind='reverse';
   else if(cvChance>0&&roll<revChance+cvChance)kind='convert';
   else kind='forward';
+  if(kind==='reverse'&&!(LINREV[type]&&LINREV[type].length))kind='forward';
   if(kind==='forward'){
     quiz.kind='forward';quiz.ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting;quiz.correct=quiz.ask==='V'?r.vol.val:r.area.val;
-    const cx=CONTEXT[type]&&CONTEXT[type][quiz.ask];if(cx&&lvl>=1&&Math.random()<storyProb())quiz.story=cx[lang];
+    if(lvl>=1&&Math.random()<storyProb())quiz.story=pickStory(type,quiz.ask);
   } else if(kind==='reverse'){
-    quiz.kind='reverse';quiz.measure='V';quiz.measureVal=r.vol.val;const keys=SOLIDS[type].dims.map(d=>d.k);quiz.unknown=keys[Math.floor(Math.random()*keys.length)];quiz.correct=dims[quiz.unknown];
+    quiz.kind='reverse';quiz.measure='V';quiz.measureVal=r.vol.val;const lin=LINREV[type];quiz.unknown=lin[Math.floor(Math.random()*lin.length)];quiz.correct=dims[quiz.unknown];
   } else {
     quiz.kind='convert';quiz.cvMeasure=Math.random()<0.75?'V':'O';quiz.cvBase=quiz.cvMeasure==='V'?r.vol.val:r.area.val;quiz.cvFromU=unitSys;quiz.cvToU=pickTargetUnit(unitSys);
     const exp=quiz.cvMeasure==='V'?3:2,Lf=UNIT_M[quiz.cvFromU]/UNIT_M[quiz.cvToU];quiz.correct=quiz.cvBase*Math.pow(Lf,exp);
@@ -1040,8 +1093,7 @@ function renderQuiz(){
   const uSuf=' '+UL();
   if(quiz.kind==='forward'){
     givenStr=def.dims.map(d=>`${d.k} = ${fmtD(quiz.dims[d.k])}${uSuf}`).join(',  ');
-    askTxt=D('Berechne ','Calculate ')+(quiz.ask==='V'?D('das <b>Volumen V</b>','the <b>volume V</b>'):D('die <b>Oberfläche O</b>','the <b>surface area O</b>'))+'.';
-    if(quiz.story)askTxt='<span style="color:var(--text)">'+quiz.story+'</span><br>'+askTxt;
+    askTxt=quiz.story?('<span style="color:var(--text)">'+quiz.story+'</span>'):(D('Berechne ','Calculate ')+(quiz.ask==='V'?D('das <b>Volumen V</b>','the <b>volume V</b>'):D('die <b>Oberfläche O</b>','the <b>surface area O</b>'))+'.');
     unit=quiz.ask==='V'?UV():UA();
   } else if(quiz.kind==='reverse'){
     const others=def.dims.filter(d=>d.k!==quiz.unknown).map(d=>`${d.k} = ${fmtD(quiz.dims[d.k])}${uSuf}`);
@@ -1239,6 +1291,8 @@ function parseParams(){
   const g=k=>p.get(k);
   const L=g('lang');if(L==='en'||L==='de')lang=L;
   const m=g('mode');if(m==='practice')practiceMode=true;else if(m==='test')practiceMode=false;
+  const sf=g('sf');if(SCHULFORMEN.some(x=>x.id===sf))applySchulform(sf);
+  const bl=g('bl');if(BUNDESLAENDER.some(x=>x.id===bl))bundeslandSel=bl;
   const lv=g('level');if(['1','2','3'].indexOf(lv)>=0)diffMode=lv;
   const gr=g('grade');if(gr&&GRADES.some(x=>x.id===gr))gradeSel=gr;
   const c=parseInt(g('count'),10);if([5,10,15,20,25].indexOf(c)>=0)chosenCount=c;
@@ -1255,12 +1309,14 @@ function applyExamUI(){
   const eb=$('#examBanner');if(eb)eb.style.display=on?'block':'none';
 }
 function renderCountRow(){const opts=[5,10,15,20,25];$('#qCountRow').innerHTML=opts.map(n=>`<button data-count="${n}" class="${n===chosenCount?'active':''}" style="justify-content:center"><span class="nm" style="font-size:13px">${n}</span></button>`).join('');}
-function renderGradeRow(){const el=$('#qGradeRow');if(!el)return;el.innerHTML=GRADES.map(g=>`<button data-grade="${g.id}" class="${g.id===gradeSel?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${g[lang]}</span></button>`).join('');}
+function renderLandSelect(){const el=$('#qLand');if(!el)return;const none=D('— Bundesland wählen —','— select state —');el.innerHTML='<option value="">'+none+'</option>'+BUNDESLAENDER.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');el.value=bundeslandSel;}
+function renderSchulformRow(){const el=$('#qSchulformRow');if(!el)return;el.innerHTML=SCHULFORMEN.map(s=>`<button data-sf="${s.id}" class="${s.id===schulformSel?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${s[lang]}</span></button>`).join('');}
+function renderGradeRow(){const el=$('#qGradeRow');if(!el)return;el.style.gridTemplateColumns='repeat('+GRADES.length+',1fr)';el.innerHTML=GRADES.map(g=>`<button data-grade="${g.id}" class="${g.id===gradeSel?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${g[lang]}</span></button>`).join('');}
 function renderDiffRow(){
   const lv=[['1',D('leicht','easy')],['2',D('mittel','medium')],['3',D('schwer','hard')]];
   $('#qDiffRow').innerHTML=lv.map(o=>`<button data-diff="${o[0]}" class="${o[0]===diffMode?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');
 }
-function renderAskRow(){const opts=[['rand',D('gemischt','mixed')],['V',D('nur V','V only')],['O',D('nur O','O only')]];$('#qaskRow').innerHTML=opts.map(o=>`<button data-ask="${o[0]}" class="${o[0]===askSetting?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
+function renderAskRow(){const opts=[['rand',D('gemischt','mixed')],['V',D('nur Volumen','volume only')],['O',D('nur Oberfläche','surface only')]];$('#qaskRow').innerHTML=opts.map(o=>`<button data-ask="${o[0]}" class="${o[0]===askSetting?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
 function renderStoryRow(){const opts=[['off',D('Aus','Off')],['mix',D('Einstreuen','Some')],['many',D('Viele','Many')]];const el=$('#qStoryRow');if(el)el.innerHTML=opts.map(o=>`<button data-story="${o[0]}" class="${o[0]===storyMode?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
 function renderHelpRow(){const opts=[[true,D('💡 Hilfe erlaubt','💡 Help allowed')],[false,D('🏆 Herausforderung','🏆 Challenge')]];$('#qHelpModeRow').innerHTML=opts.map(o=>`<button data-help="${o[0]}" class="${o[0]===helpAllowed?'active':''}" style="justify-content:center"><span class="nm" style="font-size:12px">${o[1]}</span></button>`).join('');}
 
@@ -1285,7 +1341,8 @@ function exportPDFNow(filename,studentName){
   doc.setFont('helvetica','bold');doc.setFontSize(18);doc.text(D('Körper·Werkstatt — Testergebnis','Solids·Workshop — Test Result'),M,y);y+=22;
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(90);
   doc.text((D('Datum: ','Date: '))+new Date().toLocaleString(loc()),M,y);
-  doc.text((D('Jahrgang: ','Grade: '))+gradeDef()[lang]+'   '+(D('Schwierigkeit: ','Difficulty: '))+diffLabel(curDiff())+'   '+(D('Modus: ','Mode: '))+(practiceMode?D('Üben','Practice'):'Test')+'   '+(D('Hilfe: ','Help: '))+((examMode||!helpAllowed)?D('aus (Herausforderung)','off (challenge)'):D('an','on')),M+220,y);y+=16;
+  doc.text((D('Jahrgang: ','Grade: '))+gradeDef()[lang]+'   '+(D('Schwierigkeit: ','Difficulty: '))+diffLabel(curDiff())+'   '+(D('Modus: ','Mode: '))+(practiceMode?D('Üben','Practice'):'Test')+'   '+(D('Hilfe: ','Help: '))+((examMode||!helpAllowed)?D('aus (Herausforderung)','off (challenge)'):D('an','on')),M+220,y);y+=14;
+  doc.text(D('Schulform: ','School type: ')+schulformName()+(landName()?'   ·   '+landName():''),M,y);y+=14;
   if(stuName){doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(20);doc.text((D('Name: ','Name: '))+stuName+(curClass()?'    '+D('Klasse: ','Class: ')+curClass():''),M,y);y+=16;}
   else if(curClass()){doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(20);doc.text(D('Klasse: ','Class: ')+curClass(),M,y);y+=16;}
   doc.setTextColor(20);doc.setFont('helvetica','bold');doc.setFontSize(12);
@@ -1324,14 +1381,15 @@ function wsGenerate(n){
     const dimStr=SOLIDS[type].dims.map(d=>`${d.k} = ${fmtD(dims[d.k])} ${uL}`).join(', ');
     const revChance=lvl===1?0:lvl===2?0.3:0.45,cvChance=(askSetting==='rand')?0.2:0,roll=Math.random();
     let kind;if((askSetting!=='O')&&roll<revChance)kind='reverse';else if(cvChance>0&&roll<revChance+cvChance)kind='convert';else kind='forward';
+    if(kind==='reverse'&&!(LINREV[type]&&LINREV[type].length))kind='forward';
     let prompt,answer,tag='';
     if(kind==='forward'){
       const ask=askSetting==='rand'?(Math.random()<0.5?'V':'O'):askSetting,correct=ask==='V'?r.vol.val:r.area.val;
-      const cx=CONTEXT[type]&&CONTEXT[type][ask],story=(cx&&lvl>=1&&Math.random()<storyProb())?cx[lang]:null;
+      const story=(lvl>=1&&Math.random()<storyProb())?pickStory(type,ask):null;
       const instr=ask==='V'?D('Berechne das Volumen V.','Calculate the volume V.'):D('Berechne die Oberfläche O.','Calculate the surface area O.');
-      prompt=`${name}: ${dimStr}. ${story?story+' ':''}${instr}`;answer=fmt(correct)+' '+(ask==='V'?UV():UA());if(story)tag=D('(Sachaufgabe)','(word problem)');
+      prompt=story?`${name}: ${dimStr}. ${story}`:`${name}: ${dimStr}. ${instr}`;answer=fmt(correct)+' '+(ask==='V'?UV():UA());if(story)tag=D('(Sachaufgabe)','(word problem)');
     } else if(kind==='reverse'){
-      const keys=SOLIDS[type].dims.map(d=>d.k),unk=keys[Math.floor(Math.random()*keys.length)];
+      const lin=LINREV[type],unk=lin[Math.floor(Math.random()*lin.length)];
       const others=SOLIDS[type].dims.filter(d=>d.k!==unk).map(d=>`${d.k} = ${fmtD(dims[d.k])} ${uL}`).join(', ');
       prompt=`${name}: V = ${fmt(r.vol.val)} ${UV()}${others?', '+others:''}. ${D('Gesucht','Find')}: ${unk}.`;answer=`${unk} = ${fmt(dims[unk])} ${uL}`;tag=D('(Umkehraufgabe)','(reverse)');
     } else {
@@ -1350,7 +1408,7 @@ function exportWorksheetNow(){
   doc.setFont('helvetica','bold');doc.setFontSize(17);doc.setTextColor(20);doc.text(D('Körper·Werkstatt — Arbeitsblatt','Solids·Workshop — Worksheet'),M,y);y+=20;
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(90);
   doc.text(D('Name: ____________________     Klasse: __________     Datum: __________','Name: ____________________     Class: __________     Date: __________'),M,y);y+=14;
-  doc.setFontSize(9);doc.text(D('Jahrgang: ','Grade: ')+gradeDef()[lang]+'   ·   '+D('Schwierigkeit: ','Difficulty: ')+diffLabel(curDiff())+'   ·   '+D('Aufgaben: ','Questions: ')+items.length+'   ·   '+D('Einheit: ','Unit: ')+unitSys,M,y);y+=8;
+  doc.setFontSize(9);doc.text(D('Schulform: ','School type: ')+schulformName()+(landName()?' · '+landName():'')+'   ·   '+D('Jahrgang: ','Grade: ')+gradeDef()[lang]+'   ·   '+D('Schwierigkeit: ','Difficulty: ')+diffLabel(curDiff())+'   ·   '+D('Aufgaben: ','Questions: ')+items.length+'   ·   '+D('Einheit: ','Unit: ')+unitSys,M,y);y+=8;
   doc.setDrawColor(210);doc.line(M,y,RX,y);y+=20;
   items.forEach((it,i)=>{
     const lines=doc.splitTextToSize((i+1)+'.  '+it.prompt+(it.tag?'   '+it.tag:''),RX-M);
@@ -1396,7 +1454,7 @@ function setAppMode(m){
   if(m==='net'){ensureNet();}
   if(m==='quiz'){if(!test.active){startTest();}else{if(test.finished){renderResults();}else{setQuizSolid(quiz.type,quiz.dims);renderQuiz();if(!test.checked)startTimer();}renderTestHeader();}}
 }
-function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderGradeRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
+function refreshAll(){renderLib();renderChips();renderCard();renderNetLib();renderNetDims();if(appMode==='net')drawNet();renderKindRow();renderCountRow();renderLandSelect();renderSchulformRow();renderGradeRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();if(appMode==='quiz'){renderTestHeader();if(test.finished)renderResults();else renderQuiz();}}
 function applyLang(newLang){if(newLang)lang=newLang;document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[lang][el.dataset.i18n];if(v!=null)el.textContent=v;});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=T[lang][el.dataset.i18nHtml];if(v!=null)el.innerHTML=v;});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const sn=$('#stuName');if(sn)sn.placeholder=D('z. B. Mia K.','e.g. Mia K.');renderFooter();refreshAll();updateSection();updateRefUI();setToolsHdr();if(cpa.on)renderCPA();}
 function setUnit(u){unitSys=u;document.querySelectorAll('[data-unit]').forEach(b=>b.classList.toggle('active',b.dataset.unit===u));refreshAll();updateSection();if(appMode==='explore')layout();else{buildAxes();buildRef();}updateRefUI();}
 const SOURCES=[
@@ -1463,6 +1521,8 @@ $('#qWorksheet').addEventListener('click',safe(exportWorksheet));
 $('#qCountRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-count]');if(!b)return;chosenCount=parseInt(b.dataset.count,10);focusSolids=null;renderCountRow();startTest();}));
 $('#qDiffRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qGradeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-grade]');if(!b)return;gradeSel=b.dataset.grade;focusSolids=null;renderGradeRow();startTest();}));
+$('#qLand').addEventListener('change',safe(e=>{bundeslandSel=e.target.value;lsSet('kw_bl',bundeslandSel);}));
+$('#qSchulformRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-sf]');if(!b)return;applySchulform(b.dataset.sf);lsSet('kw_sf',schulformSel);focusSolids=null;renderSchulformRow();renderGradeRow();startTest();}));
 $('#qaskRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-ask]');if(!b)return;askSetting=b.dataset.ask;focusSolids=null;renderAskRow();startTest();}));
 $('#qStoryRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-story]');if(!b)return;storyMode=b.dataset.story;focusSolids=null;renderStoryRow();startTest();}));
 $('#qHelpModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-help]');if(!b)return;helpAllowed=b.dataset.help==='true';focusSolids=null;renderHelpRow();startTest();}));
@@ -1481,7 +1541,7 @@ $('#unitSeg').addEventListener('click',safe(e=>{const b=e.target.closest('[data-
 $('#srcToggle').addEventListener('click',safe(()=>{$('#sources').classList.toggle('show');renderFooter();}));
 
 /* boot */
-try{ parseParams();renderLib();renderChips();renderKindRow();renderCountRow();renderGradeRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const cl=$('#clsName');if(cl){cl.value=classCode||lsGet('kw_class')||'';cl.addEventListener('input',()=>lsSet('kw_class',cl.value));}})();applyLang(lang);setUnit(unitSys);applyExamUI();setAppMode('explore'); }catch(err){ showFatal(err); }
+try{ schulformSel=lsGet('kw_sf')||schulformSel;bundeslandSel=lsGet('kw_bl')||bundeslandSel;parseParams();applySchulform(schulformSel);renderLib();renderChips();renderKindRow();renderCountRow();renderLandSelect();renderSchulformRow();renderGradeRow();renderDiffRow();renderAskRow();renderStoryRow();renderHelpRow();add('wuerfel');(function(){const sn=$('#stuName');if(sn){sn.value=lsGet('kw_name')||'';sn.addEventListener('input',()=>lsSet('kw_name',sn.value));}const cl=$('#clsName');if(cl){cl.value=classCode||lsGet('kw_class')||'';cl.addEventListener('input',()=>lsSet('kw_class',cl.value));}})();applyLang(lang);setUnit(unitSys);applyExamUI();setAppMode('explore'); }catch(err){ showFatal(err); }
 })();
 </script>
 </body>
