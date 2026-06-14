@@ -572,7 +572,8 @@ function drawNet(){
     g.appendChild(t1);g.appendChild(t2);g.addEventListener('click',safe(()=>toggleFace(idx)));
     const a=P(f.anchor[0],f.anchor[1]);svg.appendChild(g);faceEls.push({g,shape,t1,t2,f,a});
   });
-  $('#netCaption').textContent=`${nm(netSel)} — ${D('Netz','net')} · O = ${fmt(curTarget)} ${UA()}`;
+  if(netSel==='kugel'){$('#netCaption').innerHTML=`${nm(netSel)} — O = ${fmt(curTarget)} ${UA()}<br><span style="color:var(--muted-2)">${D('Eine Kugel hat <b>kein ebenes Netz</b> (nicht auffaltbar). Ihre Oberfläche ist aber genau so groß wie <b>4 Großkreise</b>: O = 4·π·r².','A sphere has <b>no flat net</b> (it cannot be unfolded). But its surface area equals exactly <b>4 great circles</b>: O = 4·π·r².')}</span>`;}
+  else{$('#netCaption').textContent=`${nm(netSel)} — ${D('Netz','net')} · O = ${fmt(curTarget)} ${UA()}`;}
   applyUnfold(1);styleFaces();updateNetReadout();
 }
 function applyUnfold(p){faceEls.forEach(fe=>{if(fe.f.central){fe.g.removeAttribute('transform');fe.g.style.opacity=1;return;}const a=fe.a,pp=Math.max(0,p);fe.g.setAttribute('transform',`translate(${a[0].toFixed(2)} ${a[1].toFixed(2)}) scale(${pp.toFixed(3)}) translate(${(-a[0]).toFixed(2)} ${(-a[1]).toFixed(2)})`);fe.g.style.opacity=Math.min(1,0.25+pp);});}
@@ -748,12 +749,54 @@ function renderResults(){
     <div class="sec-lbl" style="margin-bottom:8px">${D('Nach Körper','By solid')}</div><div style="margin-bottom:16px">${statBars}</div>
     ${weak.length?`<button class="btn primary" id="btnFocus" style="margin-bottom:8px">${D('Schwächste Körper üben','Practice weakest solids')} (${weak.map(t=>SOLIDS[t].name[lang]).slice(0,2).join(', ')}${weak.length>2?'…':''})</button>`:''}
     <div class="rlist">${rows}</div>
-    <button class="btn" id="btnSend" style="margin-bottom:5px">${D('Ergebnisse per E-Mail senden','Send results by e-mail')}</button><div class="rsub" style="text-align:center;margin:0 0 12px">${D('Lädt PDF + JSON herunter und öffnet die E-Mail – beide Dateien dort anhängen.','Downloads PDF + JSON and opens your e-mail – attach both files there.')}</div>
+    <div class="sec-lbl" style="margin-bottom:8px">${D('Ergebnisse senden','Send results')}</div>
+    <button class="btn primary" id="btnDownload" style="margin-bottom:8px">${D('① PDF + JSON herunterladen','① Download PDF + JSON')}</button>
+    <a class="btn" id="mailLink" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px" href="#">${D('② E-Mail-App öffnen','② Open mail app')}</a>
+    <a class="btn" id="gmailLink" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-bottom:6px" href="#">${D('② Alternativ: Gmail im Browser','② Or: Gmail in the browser')}</a>
+    <div class="rsub" style="text-align:center;margin:0 0 14px">${D('Erst herunterladen, dann die beiden Dateien in der E-Mail anhängen.','Download first, then attach both files in the e-mail.')}</div>
     ${missed?`<button class="btn" id="btnRetry" style="margin-bottom:8px">${D('Falsche wiederholen','Retry the wrong ones')} (${missed})</button>`:''}
     <div class="btn-row"><button class="btn" id="btnPdf">${D('Nur PDF','PDF only')}</button><button class="btn" id="btnJson">${D('Nur JSON','JSON only')}</button></div>
     <button class="btn" id="btnNewTest" style="margin-top:8px">${D('Neuer Test','New test')}</button>`;
   if(weak.length){const bf=$('#btnFocus');if(bf)bf.addEventListener('click',safe(()=>{practiceMode=true;focusSolids=weak.slice();renderKindRow();startTest();}));}
-  $('#btnSend').addEventListener('click',safe(sendResults));
+  (function(){
+    const sName=($('#stuName')&&$('#stuName').value.trim())||'';
+    const sMail=($('#teachMail')&&$('#teachMail').value.trim())||'';
+    const stamp=new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+    const base='koerper-test_'+slug(sName)+'_'+stamp;
+    const subject=D('Körper-Test: ','Solids test: ')+(sName||'anonym')+' — '+test.score+' '+D('Punkte','points')+' ('+pct+'%)';
+    const body=D(
+`Hallo,
+
+anbei mein Ergebnis aus der Körper·Werkstatt.
+
+Name: ${sName||'(kein Name angegeben)'}
+Ergebnis: ${test.right}/${test.total} richtig (${pct}%)
+Punkte: ${test.score}  ·  Sterne: ${st}/5  ·  ${badge}
+Schwierigkeit: ${diffMode}  ·  Modus: ${practiceMode?'Üben':'Test'}
+
+Bitte die zwei heruntergeladenen Dateien anhängen:
+- ${base}.pdf
+- ${base}.json
+
+Viele Grüße`,
+`Hi,
+
+attached are my results from the Solids·Workshop.
+
+Name: ${sName||'(no name given)'}
+Result: ${test.right}/${test.total} correct (${pct}%)
+Score: ${test.score}  ·  Stars: ${st}/5  ·  ${badge}
+Difficulty: ${diffMode}  ·  Mode: ${practiceMode?'Practice':'Test'}
+
+Please attach the two downloaded files:
+- ${base}.pdf
+- ${base}.json
+
+Best regards`);
+    const ml=$('#mailLink');if(ml)ml.href='mailto:'+encodeURIComponent(sMail)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    const gl=$('#gmailLink');if(gl)gl.href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(sMail)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    const bd=$('#btnDownload');if(bd)bd.addEventListener('click',safe(()=>{exportJSON(base+'.json',sName||null);exportPDF(base+'.pdf',sName||null);}));
+  })();
   if(missed){const br=$('#btnRetry');if(br)br.addEventListener('click',safe(()=>{const q=missedSnapshots();if(q.length)startTest(q);}));}
   $('#btnPdf').addEventListener('click',safe(()=>exportPDF()));$('#btnJson').addEventListener('click',safe(()=>exportJSON()));$('#btnNewTest').addEventListener('click',safe(()=>{focusSolids=null;startTest();}));
 }
