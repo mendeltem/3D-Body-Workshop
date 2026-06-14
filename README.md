@@ -1,5 +1,9 @@
 # Körper·Werkstatt 🧊 — 3D Body Workshop
 
+> **EN:** It bundles the full loop — **explore → understand → practise → assess → hand out a worksheet** — into a single offline HTML file. No other free tool I'm aware of combines an interactive 3D builder, animated nets, a diagnostic quiz *and* a one-click worksheet generator with answer key in one place that also survives locked-down school networks.
+>
+> **DE:** Es bündelt den ganzen Kreislauf — **entdecken → verstehen → üben → prüfen → Arbeitsblatt austeilen** — in einer einzigen Offline-HTML-Datei. Kein anderes freies Tool, das ich kenne, vereint interaktiven 3D-Baukasten, animierte Netze, ein diagnostisches Quiz *und* einen Ein-Klick-Arbeitsblatt-Generator mit Lösungsblatt an einem Ort, der zudem in abgeschotteten Schulnetzen läuft.
+
 **An interactive 3D learning tool for lower-secondary geometry — explore the volume and surface area of solids, unfold their nets, and practise.**
 *Ein interaktives 3D-Lernwerkzeug für Geometrie der Sekundarstufe I — Volumen und Oberfläche von Körpern entdecken, Netze auffalten und üben.*
 
@@ -31,22 +35,19 @@ Everything lives in **a single HTML file**: no server, no build, no install. Wor
 
 ## ⭐ Why this tool / Warum dieses Tool
 
-**EN:** It bundles the full loop — **explore → understand → practise → assess → hand out a worksheet** — into a single offline HTML file. No other free tool I'm aware of combines an interactive 3D builder, animated nets, a diagnostic quiz *and* a one-click worksheet generator with answer key in one place that also survives locked-down school networks.
-
-**DE:** Es bündelt den ganzen Kreislauf — **entdecken → verstehen → üben → prüfen → Arbeitsblatt austeilen** — in einer einzigen Offline-HTML-Datei. Kein anderes freies Tool, das ich kenne, vereint interaktiven 3D-Baukasten, animierte Netze, ein diagnostisches Quiz *und* einen Ein-Klick-Arbeitsblatt-Generator mit Lösungsblatt an einem Ort, der zudem in abgeschotteten Schulnetzen läuft.
-
 ### What it does well / Was es gut kann
 
 - **EN:** Print-ready worksheets **with a separate answer key** in one click, differentiated by grade, difficulty and question type. · **DE:** Druckfertige Arbeitsblätter **mit separatem Lösungsblatt** auf einen Klick, differenziert nach Jahrgang, Schwierigkeit und Aufgabentyp.
 - **EN:** Runs offline, no server / login / install — one HTML file, GDPR-friendly (all data stays local). · **DE:** Läuft offline, ohne Server / Login / Installation — eine HTML-Datei, DSGVO-freundlich (alle Daten bleiben lokal).
 - **EN:** Diagnostic feedback names the *misconception*, not just "wrong". · **DE:** Diagnostisches Feedback benennt die *Fehlvorstellung*, nicht nur „falsch".
+- **EN:** Adapts to **state & school type** plus four question types (standard, reverse, unit conversion, word problems). · **DE:** Passt sich an **Bundesland & Schulform** an, plus vier Aufgabentypen (Standard, Umkehr, Umrechnung, Sachaufgaben).
 - **EN:** Same start for the whole class via one link / QR code, plus a locked exam mode. · **DE:** Gleicher Start für die ganze Klasse per Link / QR-Code, plus gesperrter Prüfungsmodus.
 - **EN:** Linked representations (3D solid, net, formula, cross-section) and research-backed didactics. · **DE:** Verknüpfte Darstellungen (3D-Körper, Netz, Formel, Querschnitt) und forschungsgestützte Didaktik.
 
 ### What it can't (yet) do / Was es (noch) nicht kann
 
 - **EN:** **No grade syncing or accounts** — results live in the browser's local storage only; clearing the browser or switching devices loses them. · **DE:** **Keine Noten-Synchronisierung, keine Konten** — Ergebnisse liegen nur im lokalen Browser-Speicher; Browser leeren oder Gerät wechseln löscht sie.
-- **EN:** The **grade→solid mapping is a common default**, not tied to any specific state syllabus — check it against yours. · **DE:** Die **Jahrgangs-Zuordnung ist ein üblicher Standard**, nicht an einen bestimmten Lehrplan gebunden — bitte gegenprüfen.
+- **EN:** You pick **school type & state**, but the grade→solid mapping is a **sensible default** (school type drives it, the state is only recorded), not tied to a specific state syllabus — check it against yours. · **DE:** Du wählst **Schulform & Bundesland**, aber die Jahrgang→Körper-Zuordnung ist ein **sinnvoller Richtwert** (die Schulform steuert sie, das Bundesland wird nur vermerkt), nicht an einen bestimmten Landeslehrplan gebunden — bitte gegenprüfen.
 - **EN:** **Diagnostic feedback catches common mistakes, not every arithmetic slip.** · **DE:** **Das diagnostische Feedback fängt häufige Fehler ab, nicht jeden Rechenfehler.**
 - **EN:** A **sphere has no flat net** — the great circles shown are a magnitude aid, not an unfoldable net. · **DE:** Eine **Kugel hat kein ebenes Netz** — die gezeigten Großkreise sind eine Merkhilfe, kein auffaltbares Netz.
 - **EN:** Limited solid library (cube, cuboid, prism, cylinder, pyramid, cone, sphere) — no composite-solid builder beyond combining, no platonic solids, no truncations. · **DE:** Begrenzte Körper-Bibliothek (Würfel, Quader, Prisma, Zylinder, Pyramide, Kegel, Kugel) — kein Baukasten für zusammengesetzte Körper über das Kombinieren hinaus, keine platonischen Körper, keine Stümpfe.
@@ -73,7 +74,7 @@ The app has three modes, switchable via the tabs at the top:
 
 **3. Test — questions**
 - Two modes: **Test** (timed, scored) or **Practice** (no time pressure, unlimited attempts).
-- Pick a **grade (curriculum)** — Gr. 5/6 (cube, cuboid), Gr. 7/8 (+ prism, cylinder), Gr. 9 (+ pyramid, cone), Gr. 10 (+ sphere) — which controls *which solids* appear, and a **difficulty** (easy / medium / hard) *within* that grade (number ranges, decimals, how often reverse/conversion tasks show up). The grade mapping is a common default; check it against your state's syllabus.
+- Pick **state & school type** (16 German states · Gymnasium / Realschule / Comprehensive) and a **grade** — together these set *which solids* appear per grade (cumulative, curriculum-typical). School type is the main lever for *which body in which grade*; the state is recorded on the PDF/worksheet. Then choose a **difficulty** (easy / medium / hard) *within* that grade (number ranges, decimals, how often reverse/conversion tasks show up). It's a sensible default — check it against your own syllabus.
 - Choose **5 / 10 / 15 / 20 / 25** questions; ask for **V, O, or mixed**. Four question types are mixed in: standard, **reverse** (⇄ rearrange the formula for a missing dimension), **unit conversion** (↔ e.g. express a volume in mm³/dm³), and **real-world word problems** (📖 e.g. "how much water fits in the can?"). Each wrong answer gives a **named-misconception diagnosis**.
 - **Diagnostic feedback**: detects common mistakes from the entered number and explains them — forgot the ⅓, mixed up radius/diameter, computed O instead of V, wrong order of magnitude.
 - **Staged hints** (💡): first the formula, then the full **step-by-step solution**.
@@ -107,7 +108,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Teacher options
 
-- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
+- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&sf=gym&bl=by&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
 - **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
 - **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
 
@@ -129,7 +130,7 @@ df_q = pd.json_normalize(rows, "questions",
 - Built-in error overlay: runtime errors are shown on-screen (handy for bug reports).
 
 ### Notes & limits
-- **Browser storage:** name and teacher e-mail are kept only locally via `localStorage` — nothing is uploaded.
+- **Browser storage:** name and class are kept only locally via `localStorage` — nothing is uploaded.
 - The **diagnostic feedback** catches the most common error types, not every arithmetic slip.
 - A **sphere has no flat net**; the four great circles shown are a magnitude aid, not an unfoldable net.
 
@@ -153,7 +154,7 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 
 **3. Test — Aufgaben**
 - Zwei Betriebsarten: **Test** (mit Zeit & Punkten) oder **Üben** (ohne Zeitdruck, beliebig viele Versuche).
-- **Jahrgang (Lehrplan)** wählbar — Kl. 5/6 (Würfel, Quader), Kl. 7/8 (+ Prisma, Zylinder), Kl. 9 (+ Pyramide, Kegel), Kl. 10 (+ Kugel) — das bestimmt, *welche* Körper drankommen, plus eine **Schwierigkeit** (leicht / mittel / schwer) *innerhalb* des Jahrgangs (Zahlenbereiche, Dezimalzahlen, Häufigkeit von Umkehr-/Umrechnungsaufgaben). Die Jahrgangs-Zuordnung ist ein üblicher Standard – bitte am Lehrplan deines Bundeslandes gegenprüfen.
+- **Bundesland & Schulform** wählbar (16 Länder · Gymnasium / Realschule / Gesamt-/Mittelschule) plus **Jahrgang** — zusammen bestimmen sie, *welche* Körper pro Jahrgang erscheinen (kumulativ, lehrplanüblich). Die *Schulform* ist der Haupt-Hebel dafür, *welcher* Körper *wann* drankommt; das *Bundesland* wird auf PDF/Arbeitsblatt vermerkt. Dazu eine **Schwierigkeit** (leicht / mittel / schwer) *innerhalb* des Jahrgangs (Zahlenbereiche, Dezimalzahlen, Häufigkeit von Umkehr-/Umrechnungsaufgaben). Es ist ein sinnvoller Richtwert – bitte am eigenen Lehrplan gegenprüfen.
 - Aufgabenzahl **5 / 10 / 15 / 20 / 25** wählbar; Frage nach **V, O oder gemischt**. Vier Aufgabentypen sind eingemischt: Standard, **Umkehraufgaben** (⇄ Formel nach einer fehlenden Größe umstellen), **Einheiten umrechnen** (↔ z. B. ein Volumen in mm³/dm³ angeben) und **Realbezug-Textaufgaben** (📖 z. B. „Wie viel Wasser passt in die Dose?"). Jede falsche Antwort liefert eine **benannte Fehlvorstellungs-Diagnose**.
 - **Diagnostisches Feedback**: erkennt typische Fehler an der eingegebenen Zahl und erklärt sie — ⅓ vergessen, Radius/Durchmesser verwechselt, O statt V, falsche Größenordnung.
 - **Gestufte Tipps** (💡): erst die Formel, dann die volle **Schritt-für-Schritt-Lösung**.
@@ -187,7 +188,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Optionen für Lehrkräfte
 
-- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
+- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&sf=gym&bl=by&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
 - **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
 - **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
 
@@ -209,7 +210,7 @@ df_q = pd.json_normalize(rows, "questions",
 - Eingebautes Fehler-Overlay: Laufzeitfehler werden sichtbar gemeldet (gut zum Melden von Bugs).
 
 ### Hinweise & Grenzen
-- **Browser-Speicher:** Name und Lehrer-E-Mail werden via `localStorage` nur lokal auf dem Gerät gespeichert — nichts wird hochgeladen.
+- **Browser-Speicher:** Name und Klasse werden via `localStorage` nur lokal auf dem Gerät gespeichert — nichts wird hochgeladen.
 - Das **diagnostische Feedback** fängt die häufigsten Fehlertypen ab, aber nicht jeden Rechenfehler.
 - Eine **Kugel hat kein ebenes Netz**; die vier gezeigten Großkreise sind eine Größen-Merkhilfe, kein auffaltbares Netz.
 
@@ -237,7 +238,7 @@ The instructional design is grounded in the following findings. All DOIs were ve
 | Tan Şişman, G. & Aksu, M. (2016). *Misconceptions and errors in spatial measurement: length, area, and volume.* IJSME, 14, 1293–1319. [DOI](https://doi.org/10.1007/s10763-015-9642-5) | **EN:** Documents frequent errors (confusing surface/volume, area/perimeter) — basis for the diagnostic feedback. · **DE:** Dokumentiert häufige Fehler (Oberfläche/Volumen, Fläche/Umfang) — Grundlage des diagnostischen Feedbacks. |
 | Chan, K. K. & Leung, S. W. (2014). *Dynamic geometry software improves mathematical achievement: a meta-analysis.* JECR, 51(3), 311–325. [DOI](https://doi.org/10.2190/EC.51.3.c) | **EN:** Meta-analysis: dynamic geometry software improves achievement — supports the interactive 3D approach. · **DE:** Meta-Analyse: dynamische Geometrie-Software verbessert die Leistung — stützt den interaktiven 3D-Ansatz. |
 
-> **Units / Einheiten:** generic units are used — VE (volume unit / Volumeneinheit), FE (area unit / Flächeneinheit), LE (length unit / Längeneinheit) — following the convention of many lower-secondary textbooks.
+> **Units / Einheiten:** real metric units are used — **mm / cm / dm / m** (default cm), volumes in …³ and areas in …², plus dedicated unit-conversion tasks. · *Es werden echte metrische Einheiten verwendet — **mm / cm / dm / m** (Standard cm), Volumen in …³ und Flächen in …², dazu eigene Umrechnungsaufgaben.*
 
 ---
 
