@@ -377,7 +377,6 @@
         <div class="lib" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:16px" id="qaskRow"></div>
         <div class="sec-lbl" data-i18n="help_label">Lösungshilfe</div>
         <div class="lib" style="grid-template-columns:1fr 1fr;margin-bottom:16px" id="qHelpModeRow"></div>
-        <button class="btn" id="qShare" data-i18n="share_btn" style="margin-bottom:16px">🔗 Aufgabe als Link teilen</button>
         </div>
         <div class="hint-box" id="examBanner" data-i18n-html="exam_banner" style="display:none"></div>
         <div id="testPlay">
@@ -406,8 +405,7 @@
 
 <script src="vendor/three.min.js"></script>
 <script>window.THREE||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"><\/scr'+'ipt>');</script>
-<script src="vendor/jspdf.umd.min.js"></script>
-<script>window.jspdf||document.write('<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"><\/scr'+'ipt>');</script>
+<script>window.jspdf||0;</script>
 <script>
 (function(){
 "use strict";
@@ -1180,15 +1178,6 @@ function applyExamUI(){
   const hr=$('#qHelpRow');if(hr)hr.style.display=on?'none':'';
   const eb=$('#examBanner');if(eb)eb.style.display=on?'block':'none';
 }
-function shareLink(){
-  const p=new URLSearchParams();
-  p.set('mode',practiceMode?'practice':'test');p.set('level',diffMode);p.set('count',String(chosenCount));p.set('ask',askSetting);p.set('lang',lang);p.set('unit',unitSys);if(!helpAllowed)p.set('help','0');
-  const cls=curClass();if(cls)p.set('class',cls);
-  const url=location.origin+location.pathname+'?'+p.toString();
-  const done=()=>{const sh=$('#qShare');if(sh){const old=sh.textContent;sh.textContent=D('✓ Link kopiert','✓ Link copied');setTimeout(()=>{sh.textContent=old;},1800);}};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,()=>window.prompt(D('Link kopieren:','Copy link:'),url));}
-  else window.prompt(D('Link kopieren:','Copy link:'),url);
-}
 function renderCountRow(){const opts=[5,10,15,20,25];$('#qCountRow').innerHTML=opts.map(n=>`<button data-count="${n}" class="${n===chosenCount?'active':''}" style="justify-content:center"><span class="nm" style="font-size:13px">${n}</span></button>`).join('');}
 function renderDiffRow(){
   const lv=[['1',D('Stufe 1','Level 1')],['2',D('Stufe 2','Level 2')],['3',D('Stufe 3','Level 3')]];
@@ -1206,9 +1195,15 @@ function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 function slug(s){return(s||'').toString().trim().replace(/[^\w\u00c0-\u024f-]+/g,'_').replace(/^_+|_+$/g,'')||'anonym';}
 function defName(ext){const n=($('#stuName')&&$('#stuName').value.trim())||'';const c=curClass();return 'koerper-test_'+slug([c,n].filter(Boolean).join('_')||'anonym')+'_'+new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')+'.'+ext;}
 function exportJSON(filename,studentName){const name=studentName!==undefined?studentName:(($('#stuName')&&$('#stuName').value.trim())||null);const pct=Math.round(test.right/test.total*100),st=starsFor(pct);const data={app:'Koerper-Werkstatt',type:'test-result',date:new Date().toISOString(),student:name||null,class:curClass()||null,language:lang,difficulty:diffMode,mode:practiceMode?'practice':'test',examMode,helpAllowed:(examMode?false:helpAllowed),challenge:(examMode||!helpAllowed),askSetting,total:test.total,correct:test.right,wrong:test.wrong,percent:pct,score:test.score,stars:st,badge:badgeFor(st),bestStreak:test.bestStreak,questions:test.results.map(r=>({n:r.n,solid:r.type,kind:r.kind,level:r.level,ask:r.ask,given:r.given,correct:Math.round(r.correct*100)/100,answer:r.answer,ok:r.ok,points:r.points,hint:r.hint}))};download(filename||defName('json'),new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));}
-function exportPDF(filename,studentName){
+function ensureJsPDF(cb){
+  if(window.jspdf&&window.jspdf.jsPDF){cb();return;}
+  const fail=()=>alert(D('PDF-Bibliothek konnte nicht geladen werden (Internet nötig).','PDF library could not be loaded (internet required).'));
+  const load=(src,next)=>{const s=document.createElement('script');s.src=src;s.onload=()=>{(window.jspdf&&window.jspdf.jsPDF)?cb():(next?next():fail());};s.onerror=()=>{next?next():fail();};document.head.appendChild(s);};
+  load('vendor/jspdf.umd.min.js',()=>load('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',null));
+}
+function exportPDF(filename,studentName){ensureJsPDF(()=>exportPDFNow(filename,studentName));}
+function exportPDFNow(filename,studentName){
   const stuName=studentName!==undefined?studentName:(($('#stuName')&&$('#stuName').value.trim())||null);
-  if(!window.jspdf||!window.jspdf.jsPDF){alert(D('PDF-Bibliothek nicht geladen (Internet nötig).','PDF library not loaded (internet required).'));return;}
   const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'pt',format:'a4'}),M=36;let y=52;
   const pct=Math.round(test.right/test.total*100),st=starsFor(pct);
   doc.setFont('helvetica','bold');doc.setFontSize(18);doc.text(D('Körper·Werkstatt — Testergebnis','Solids·Workshop — Test Result'),M,y);y+=22;
@@ -1334,7 +1329,6 @@ $('#qDiffRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data
 $('#qModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-diff]');if(!b)return;diffMode=b.dataset.diff;focusSolids=null;renderDiffRow();startTest();}));
 $('#qaskRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-ask]');if(!b)return;askSetting=b.dataset.ask;focusSolids=null;renderAskRow();startTest();}));
 $('#qHelpModeRow').addEventListener('click',safe(e=>{const b=e.target.closest('[data-help]');if(!b)return;helpAllowed=b.dataset.help==='true';focusSolids=null;renderHelpRow();startTest();}));
-$('#qShare').addEventListener('click',safe(shareLink));
 $('#qCheck').addEventListener('click',safe(checkAnswer));
 $('#qHintBtn').addEventListener('click',safe(useHint));
 $('#qSol').addEventListener('click',safe(showQuizSolution));
