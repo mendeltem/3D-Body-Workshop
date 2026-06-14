@@ -40,14 +40,14 @@ Everything lives in **a single HTML file**: no server, no build, no install. Wor
 - **EN:** Print-ready worksheets **with a separate answer key** in one click, differentiated by grade, difficulty and question type. · **DE:** Druckfertige Arbeitsblätter **mit separatem Lösungsblatt** auf einen Klick, differenziert nach Jahrgang, Schwierigkeit und Aufgabentyp.
 - **EN:** Runs offline, no server / login / install — one HTML file, GDPR-friendly (all data stays local). · **DE:** Läuft offline, ohne Server / Login / Installation — eine HTML-Datei, DSGVO-freundlich (alle Daten bleiben lokal).
 - **EN:** Diagnostic feedback names the *misconception*, not just "wrong". · **DE:** Diagnostisches Feedback benennt die *Fehlvorstellung*, nicht nur „falsch".
-- **EN:** Adapts to **state & school type** plus four question types (standard, reverse, unit conversion, word problems). · **DE:** Passt sich an **Bundesland & Schulform** an, plus vier Aufgabentypen (Standard, Umkehr, Umrechnung, Sachaufgaben).
+- **EN:** Adapts to the **school type** plus four question types (standard, reverse, unit conversion, word problems). · **DE:** Passt sich an die **Schulform** an, plus vier Aufgabentypen (Standard, Umkehr, Umrechnung, Sachaufgaben).
 - **EN:** Same start for the whole class via one link / QR code, plus a locked exam mode. · **DE:** Gleicher Start für die ganze Klasse per Link / QR-Code, plus gesperrter Prüfungsmodus.
 - **EN:** Linked representations (3D solid, net, formula, cross-section) and research-backed didactics. · **DE:** Verknüpfte Darstellungen (3D-Körper, Netz, Formel, Querschnitt) und forschungsgestützte Didaktik.
 
 ### What it can't (yet) do / Was es (noch) nicht kann
 
 - **EN:** **No grade syncing or accounts** — results live in the browser's local storage only; clearing the browser or switching devices loses them. · **DE:** **Keine Noten-Synchronisierung, keine Konten** — Ergebnisse liegen nur im lokalen Browser-Speicher; Browser leeren oder Gerät wechseln löscht sie.
-- **EN:** You pick **school type & state**, but the grade→solid mapping is a **sensible default** (school type drives it, the state is only recorded), not tied to a specific state syllabus — check it against yours. · **DE:** Du wählst **Schulform & Bundesland**, aber die Jahrgang→Körper-Zuordnung ist ein **sinnvoller Richtwert** (die Schulform steuert sie, das Bundesland wird nur vermerkt), nicht an einen bestimmten Landeslehrplan gebunden — bitte gegenprüfen.
+- **EN:** You pick a **school type** and grade, but the grade→solid mapping is a **sensible default** (school type drives it), not tied to a specific state syllabus — check it against yours. · **DE:** Du wählst eine **Schulform** und einen Jahrgang, aber die Jahrgang→Körper-Zuordnung ist ein **sinnvoller Richtwert** (die Schulform steuert sie), nicht an einen bestimmten Landeslehrplan gebunden — bitte gegenprüfen.
 - **EN:** **Diagnostic feedback catches common mistakes, not every arithmetic slip.** · **DE:** **Das diagnostische Feedback fängt häufige Fehler ab, nicht jeden Rechenfehler.**
 - **EN:** A **sphere has no flat net** — the great circles shown are a magnitude aid, not an unfoldable net. · **DE:** Eine **Kugel hat kein ebenes Netz** — die gezeigten Großkreise sind eine Merkhilfe, kein auffaltbares Netz.
 - **EN:** Limited solid library (cube, cuboid, prism, cylinder, pyramid, cone, sphere) — no composite-solid builder beyond combining, no platonic solids, no truncations. · **DE:** Begrenzte Körper-Bibliothek (Würfel, Quader, Prisma, Zylinder, Pyramide, Kegel, Kugel) — kein Baukasten für zusammengesetzte Körper über das Kombinieren hinaus, keine platonischen Körper, keine Stümpfe.
@@ -74,7 +74,7 @@ The app has three modes, switchable via the tabs at the top:
 
 **3. Test — questions**
 - Two modes: **Test** (timed, scored) or **Practice** (no time pressure, unlimited attempts).
-- Pick **state & school type** (16 German states · Gymnasium / Realschule / Comprehensive) and a **grade** — together these set *which solids* appear per grade (cumulative, curriculum-typical). School type is the main lever for *which body in which grade*; the state is recorded on the PDF/worksheet. Then choose a **difficulty** (easy / medium / hard) *within* that grade (number ranges, decimals, how often reverse/conversion tasks show up). It's a sensible default — check it against your own syllabus.
+- Pick a **school type** (Gymnasium / Realschule / Comprehensive) and a **grade** — together these set *which solids* appear per grade (cumulative, curriculum-typical). The school type is the lever for *which body in which grade*. Then choose a **difficulty** (easy / medium / hard) *within* that grade (number ranges, decimals, how often reverse/conversion tasks show up). It's a sensible default — check it against your own syllabus.
 - Choose **5 / 10 / 15 / 20 / 25** questions; ask for **V, O, or mixed**. Four question types are mixed in: standard, **reverse** (⇄ rearrange the formula for a missing dimension), **unit conversion** (↔ e.g. express a volume in mm³/dm³), and **real-world word problems** (📖 e.g. "how much water fits in the can?"). Each wrong answer gives a **named-misconception diagnosis**.
 - **Diagnostic feedback**: detects common mistakes from the entered number and explains them — forgot the ⅓, mixed up radius/diameter, computed O instead of V, wrong order of magnitude.
 - **Staged hints** (💡): first the formula, then the full **step-by-step solution**.
@@ -108,7 +108,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Teacher options
 
-- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&sf=gym&bl=by&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
+- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&sf=gym&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
 - **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
 - **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
 
@@ -154,7 +154,7 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 
 **3. Test — Aufgaben**
 - Zwei Betriebsarten: **Test** (mit Zeit & Punkten) oder **Üben** (ohne Zeitdruck, beliebig viele Versuche).
-- **Bundesland & Schulform** wählbar (16 Länder · Gymnasium / Realschule / Gesamt-/Mittelschule) plus **Jahrgang** — zusammen bestimmen sie, *welche* Körper pro Jahrgang erscheinen (kumulativ, lehrplanüblich). Die *Schulform* ist der Haupt-Hebel dafür, *welcher* Körper *wann* drankommt; das *Bundesland* wird auf PDF/Arbeitsblatt vermerkt. Dazu eine **Schwierigkeit** (leicht / mittel / schwer) *innerhalb* des Jahrgangs (Zahlenbereiche, Dezimalzahlen, Häufigkeit von Umkehr-/Umrechnungsaufgaben). Es ist ein sinnvoller Richtwert – bitte am eigenen Lehrplan gegenprüfen.
+- **Schulform** wählbar (Gymnasium / Realschule / Gesamt-/Mittelschule) plus **Jahrgang** — zusammen bestimmen sie, *welche* Körper pro Jahrgang erscheinen (kumulativ, lehrplanüblich). Die *Schulform* ist der Hebel dafür, *welcher* Körper *wann* drankommt. Dazu eine **Schwierigkeit** (leicht / mittel / schwer) *innerhalb* des Jahrgangs (Zahlenbereiche, Dezimalzahlen, Häufigkeit von Umkehr-/Umrechnungsaufgaben). Es ist ein sinnvoller Richtwert – bitte am eigenen Lehrplan gegenprüfen.
 - Aufgabenzahl **5 / 10 / 15 / 20 / 25** wählbar; Frage nach **V, O oder gemischt**. Vier Aufgabentypen sind eingemischt: Standard, **Umkehraufgaben** (⇄ Formel nach einer fehlenden Größe umstellen), **Einheiten umrechnen** (↔ z. B. ein Volumen in mm³/dm³ angeben) und **Realbezug-Textaufgaben** (📖 z. B. „Wie viel Wasser passt in die Dose?"). Jede falsche Antwort liefert eine **benannte Fehlvorstellungs-Diagnose**.
 - **Diagnostisches Feedback**: erkennt typische Fehler an der eingegebenen Zahl und erklärt sie — ⅓ vergessen, Radius/Durchmesser verwechselt, O statt V, falsche Größenordnung.
 - **Gestufte Tipps** (💡): erst die Formel, dann die volle **Schritt-für-Schritt-Lösung**.
@@ -188,7 +188,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Optionen für Lehrkräfte
 
-- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&sf=gym&bl=by&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
+- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&sf=gym&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
 - **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
 - **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
 
