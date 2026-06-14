@@ -1045,6 +1045,16 @@ const CONTEXT={
   }
 };
 function pickStory(type,ask){const arr=CONTEXT[type]&&CONTEXT[type][ask];if(!arr||!arr.length)return null;return arr[Math.floor(Math.random()*arr.length)][lang];}
+/* PDF-sichere Formeln (helvetica kann kein π/√ → "pi" ausgeschrieben, ² ³ · sind ok) */
+const FORMTXT={
+  wuerfel:['V = a³','O = 6 · a²'],
+  quader:['V = a · b · c','O = 2 · (a·b + a·c + b·c)'],
+  prisma:['V = G · h','O = 2 · G + Mantel'],
+  zylinder:['V = pi · r² · h','O = 2 · pi · r · (r + h)'],
+  pyramide:['V = 1/3 · a² · h','O = a² + 2 · a · hs'],
+  kegel:['V = 1/3 · pi · r² · h','O = pi · r · (r + s)'],
+  kugel:['V = 4/3 · pi · r³','O = 4 · pi · r²']
+};
 function correctText(){if(quiz.kind==='reverse')return fmt(quiz.correct)+' '+UL();if(quiz.kind==='convert')return fmt(quiz.correct)+' '+uStr(quiz.cvToU,quiz.cvMeasure);return fmt(quiz.correct)+' '+(quiz.ask==='V'?UV():UA());}
 
 function stopTimer(){if(qTimerId){clearInterval(qTimerId);qTimerId=null;}}
@@ -1409,7 +1419,16 @@ function exportWorksheetNow(){
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(90);
   doc.text(D('Name: ____________________     Klasse: __________     Datum: __________','Name: ____________________     Class: __________     Date: __________'),M,y);y+=14;
   doc.setFontSize(9);doc.text(D('Schulform: ','School type: ')+schulformName()+(landName()?' · '+landName():'')+'   ·   '+D('Jahrgang: ','Grade: ')+gradeDef()[lang]+'   ·   '+D('Schwierigkeit: ','Difficulty: ')+diffLabel(curDiff())+'   ·   '+D('Aufgaben: ','Questions: ')+items.length+'   ·   '+D('Einheit: ','Unit: ')+unitSys,M,y);y+=8;
-  doc.setDrawColor(210);doc.line(M,y,RX,y);y+=20;
+  doc.setDrawColor(210);doc.line(M,y,RX,y);y+=16;
+  // Merkkasten: V/O erklärt + Formeln passend zum Jahrgang
+  doc.setFont('helvetica','bold');doc.setFontSize(10.5);doc.setTextColor(20);doc.text(D('Zur Erinnerung','Reminder'),M,y);y+=15;
+  doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(60);
+  doc.splitTextToSize(D('V (Volumen) = wie viel hineinpasst, gemessen in '+UV()+'.    O (Oberfläche) = gesamte Außenfläche, gemessen in '+UA()+'.','V (volume) = how much fits inside, measured in '+UV()+'.    O (surface) = total outer area, measured in '+UA()+'.'),RX-M).forEach(l=>{doc.text(l,M,y);y+=13;});
+  y+=3;
+  const gsF=gradeSolids();
+  gsF.forEach(t=>{const f=FORMTXT[t];if(!f)return;const nm=SOLIDS[t].name[lang]+':';doc.setFont('helvetica','bold');doc.setTextColor(30);doc.text(nm,M,y);const w=doc.getTextWidth(nm);doc.setFont('helvetica','normal');doc.setTextColor(70);doc.text(f[0]+'      '+f[1],M+w+6,y);y+=13;});
+  if(gsF.some(t=>t==='prisma'||t==='pyramide'||t==='kegel')){doc.setTextColor(120);doc.setFontSize(8);doc.text(D('G = Grundfläche · hs = Seitenhöhe · s = Mantellinie · pi ca. 3,14','G = base area · hs = slant height · s = slant length · pi approx. 3.14'),M,y);y+=11;}
+  doc.setDrawColor(210);doc.line(M,y,RX,y);y+=18;
   items.forEach((it,i)=>{
     const lines=doc.splitTextToSize((i+1)+'.  '+it.prompt+(it.tag?'   '+it.tag:''),RX-M);
     const blockH=lines.length*13+40;

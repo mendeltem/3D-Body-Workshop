@@ -88,7 +88,7 @@ The app has three modes, switchable via the tabs at the top:
 
 The Test tab has fields for the **student's name** and **class** (stored locally in the browser). At the end of a test, click **📄 Save as PDF** — a clean report (name, class, score, per-question breakdown) is downloaded. Optionally, **Data as JSON** exports the same results in machine-readable form for analysis.
 
-**Printable worksheets (no devices needed).** In the Test settings, **📄 Worksheet as PDF** generates a print-ready worksheet using the chosen count, difficulty and question type — with writing space for each task — plus a **separate answer key** on the last page. Each click produces a fresh randomised set.
+**Printable worksheets (no devices needed).** In the Test settings, **📄 Worksheet as PDF** generates a print-ready worksheet using the chosen count, difficulty and question type. It opens with a short **reminder box** that explains V & O and lists the formulas for the chosen grade, then the tasks with writing space, plus a **separate answer key** on the last page. Each click produces a fresh randomised set.
 
 The **Word problems** setting (Off / Some / Many) lets the teacher decide how many real-world context tasks are mixed in — it applies to both the live test and the generated worksheet (also via `?story=off|mix|many`).
 
@@ -168,7 +168,7 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 
 Im Test-Tab gibt es Felder für **Name** der Schüler:in und **Klasse** (werden lokal im Browser gemerkt). Am Ende des Tests auf **📄 Als PDF speichern** klicken — ein sauberes Protokoll (Name, Klasse, Punkte, Aufgabenübersicht) wird heruntergeladen. Optional exportiert **Daten als JSON** dieselben Ergebnisse maschinenlesbar zur Auswertung.
 
-**Druckbare Arbeitsblätter (ganz ohne Geräte).** In den Test-Einstellungen erzeugt **📄 Arbeitsblatt als PDF** ein druckfertiges Arbeitsblatt mit der gewählten Anzahl, Schwierigkeit und Frageart — mit Schreibplatz pro Aufgabe — plus **separatem Lösungsblatt** auf der letzten Seite. Jeder Klick erzeugt einen neuen, zufälligen Satz.
+**Druckbare Arbeitsblätter (ganz ohne Geräte).** In den Test-Einstellungen erzeugt **📄 Arbeitsblatt als PDF** ein druckfertiges Arbeitsblatt mit der gewählten Anzahl, Schwierigkeit und Frageart. Es beginnt mit einem kurzen **Merkkasten**, der V & O erklärt und die Formeln des gewählten Jahrgangs auflistet, danach die Aufgaben mit Schreibplatz, plus **separatem Lösungsblatt** auf der letzten Seite. Jeder Klick erzeugt einen neuen, zufälligen Satz.
 
 Über **Textaufgaben** (Aus / Einstreuen / Viele) entscheidet die Lehrkraft, wie viele Sachaufgaben mit Realbezug eingemischt werden — das gilt für den Live-Test **und** das erzeugte Arbeitsblatt (auch per `?story=off|mix|many`).
 
