@@ -1168,7 +1168,9 @@ function diagnose(v){
       }
     }
   }
-  for(const[val,msg]of traps)if(near(v,val))return msg;
+  let _best=null,_bestErr=Infinity;
+  for(const[val,msg]of traps){if(!near(v,val))continue;const e=val!==0?Math.abs(v-val)/Math.abs(val):Math.abs(v-val);if(e<_bestErr){_bestErr=e;_best=msg;}}
+  if(_best)return _best;
   if(quiz.correct!==0){const ratio=v/quiz.correct;if(ratio>1.7&&ratio<2.3)return D('Etwa <b>doppelt</b> so groß – fehlt vielleicht ein ½, oder r und d verwechselt?','About <b>twice</b> too big – maybe a missing ½, or r/d mixed up?');if(ratio>0.4&&ratio<0.6)return D('Ungefähr die <b>Hälfte</b> – fehlt ein Faktor 2?','About <b>half</b> – is a factor of 2 missing?');if(ratio>0)return D('Größenordnung prüfen – <b>2D/3D</b> nicht verwechseln: Fläche in …², Volumen in …³.','Check the order of magnitude – don\u2019t mix up <b>2D/3D</b>: area in …², volume in …³.');}
   return null;
 }
