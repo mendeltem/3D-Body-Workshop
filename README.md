@@ -4,6 +4,8 @@
 
 Alles steckt in **einer einzigen HTML-Datei**: kein Server, kein Build, keine Installation. Datei öffnen — fertig. Funktioniert offline, ist zweisprachig (Deutsch / Englisch) und für den Klassenraum gedacht.
 
+### 🔗 Live-Demo: **https://mendeltem.github.io/3D-Body-Workshop/**
+
 > *Created by Uchralt Temuulen — Feedback willkommen: [LinkedIn](https://www.linkedin.com/in/uchralt-temuulen-31a3a570)*
 
 ---
@@ -64,15 +66,15 @@ df_q = pd.json_normalize(rows, "questions",
 
 ## 🚀 Loslegen
 
-1. `koerper-labor.html` herunterladen.
-2. Im Browser öffnen (Doppelklick). Das war's.
+**Lokal:** `index.html` herunterladen und im Browser öffnen (Doppelklick). Das war's.
 
 **Offline?** Ja — bis auf den **PDF-Export** (lädt die jsPDF-Bibliothek vom CDN) braucht nichts eine Internetverbindung. Der JSON-Export funktioniert immer.
 
-### Auf GitHub Pages veröffentlichen
-1. Datei ins Repo legen (am besten als `index.html` umbenennen).
-2. **Settings → Pages → Branch: `main` / root** aktivieren.
-3. Nach kurzer Zeit ist die App unter `https://<dein-name>.github.io/<repo>/` erreichbar.
+### Online über GitHub Pages
+1. Die App muss als **`index.html`** im Repo liegen (sonst zeigt die Adresse einen 404 — GitHub Pages sucht am Anfang immer `index.html`).
+2. **Settings → Pages → Source: „Deploy from a branch" → Branch: `main` / `/ (root)` → Save**.
+3. Nach ein paar Minuten läuft die App unter:
+   **https://mendeltem.github.io/3D-Body-Workshop/**
 
 ---
 
