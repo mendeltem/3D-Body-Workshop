@@ -5,6 +5,8 @@
 
 Everything lives in **a single HTML file**: no server, no build, no install. Works offline and is bilingual (English / German).
 
+> 👩‍🏫 **For teachers:** generate a **print-ready worksheet with a separate answer key in one click** — pick grade, difficulty and question types, done. · *Für Lehrkräfte: druckfertiges Arbeitsblatt samt Lösungsblatt mit einem Klick – Jahrgang, Schwierigkeit und Aufgabentypen wählen, fertig.*
+
 ### 🔗 Live demo / Live-Demo: **https://mendeltem.github.io/3D-Body-Workshop/**
 
 > *Created by Uchralt Temuulen — feedback welcome / Feedback willkommen: [LinkedIn](https://www.linkedin.com/in/uchralt-temuulen-31a3a570)*
@@ -18,6 +20,10 @@ Everything lives in **a single HTML file**: no server, no build, no install. Wor
 **Test / Quiz** — timed practice with instant, diagnostic feedback · *Üben mit sofortiger, diagnostischer Rückmeldung*
 
 ![Test / Quiz mode](2.PNG)
+
+**📄 Worksheet generator (for teachers)** — one click creates a print-ready worksheet with a separate answer key, no devices needed · *Ein Klick erzeugt ein druckfertiges Arbeitsblatt mit separatem Lösungsblatt – ganz ohne Geräte für die Klasse*
+
+![Worksheet / Arbeitsblatt PDF](arbeits_plat.png)
 
 **Language / Sprache:** [🇬🇧 English](#-english) · [🇩🇪 Deutsch](#-deutsch) · [📚 References / Quellen](#-references--wissenschaftliche-grundlagen)
 
@@ -41,7 +47,7 @@ The app has three modes, switchable via the tabs at the top:
 
 **3. Test — questions**
 - Two modes: **Test** (timed, scored) or **Practice** (no time pressure, unlimited attempts).
-- Difficulty **levels 1–3**, plus **Rising** or **Adaptive**.
+- Pick a **grade (curriculum)** — Gr. 5/6 (cube, cuboid), Gr. 7/8 (+ prism, cylinder), Gr. 9 (+ pyramid, cone), Gr. 10 (+ sphere) — which controls *which solids* appear, and a **difficulty** (easy / medium / hard) *within* that grade (number ranges, decimals, how often reverse/conversion tasks show up). The grade mapping is a common default; check it against your state's syllabus.
 - Choose **5 / 10 / 15 / 20 / 25** questions; ask for **V, O, or mixed**. Four question types are mixed in: standard, **reverse** (⇄ rearrange the formula for a missing dimension), **unit conversion** (↔ e.g. express a volume in mm³/dm³), and **real-world word problems** (📖 e.g. "how much water fits in the can?"). Each wrong answer gives a **named-misconception diagnosis**.
 - **Diagnostic feedback**: detects common mistakes from the entered number and explains them — forgot the ⅓, mixed up radius/diameter, computed O instead of V, wrong order of magnitude.
 - **Staged hints** (💡): first the formula, then the full **step-by-step solution**.
@@ -75,7 +81,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Teacher options
 
-- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
+- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
 - **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
 - **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
 
@@ -121,7 +127,7 @@ Die App hat drei Modi, umschaltbar über die Reiter oben:
 
 **3. Test — Aufgaben**
 - Zwei Betriebsarten: **Test** (mit Zeit & Punkten) oder **Üben** (ohne Zeitdruck, beliebig viele Versuche).
-- Schwierigkeit **Stufe 1–3**, dazu **Ansteigend** oder **Adaptiv**.
+- **Jahrgang (Lehrplan)** wählbar — Kl. 5/6 (Würfel, Quader), Kl. 7/8 (+ Prisma, Zylinder), Kl. 9 (+ Pyramide, Kegel), Kl. 10 (+ Kugel) — das bestimmt, *welche* Körper drankommen, plus eine **Schwierigkeit** (leicht / mittel / schwer) *innerhalb* des Jahrgangs (Zahlenbereiche, Dezimalzahlen, Häufigkeit von Umkehr-/Umrechnungsaufgaben). Die Jahrgangs-Zuordnung ist ein üblicher Standard – bitte am Lehrplan deines Bundeslandes gegenprüfen.
 - Aufgabenzahl **5 / 10 / 15 / 20 / 25** wählbar; Frage nach **V, O oder gemischt**. Vier Aufgabentypen sind eingemischt: Standard, **Umkehraufgaben** (⇄ Formel nach einer fehlenden Größe umstellen), **Einheiten umrechnen** (↔ z. B. ein Volumen in mm³/dm³ angeben) und **Realbezug-Textaufgaben** (📖 z. B. „Wie viel Wasser passt in die Dose?"). Jede falsche Antwort liefert eine **benannte Fehlvorstellungs-Diagnose**.
 - **Diagnostisches Feedback**: erkennt typische Fehler an der eingegebenen Zahl und erklärt sie — ⅓ vergessen, Radius/Durchmesser verwechselt, O statt V, falsche Größenordnung.
 - **Gestufte Tipps** (💡): erst die Formel, dann die volle **Schritt-für-Schritt-Lösung**.
@@ -155,7 +161,7 @@ df_q = pd.json_normalize(rows, "questions",
 
 ### Optionen für Lehrkräfte
 
-- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
+- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
 - **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
 - **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
 
