@@ -7,7 +7,7 @@
 **An interactive 3D learning tool for lower-secondary geometry — explore the volume and surface area of solids, unfold their nets, and practise.**
 *Ein interaktives 3D-Lernwerkzeug für Geometrie der Sekundarstufe I — Volumen und Oberfläche von Körpern entdecken, Netze auffalten und üben.*
 
-Everything lives in **a single HTML file**: no server, no build, no install. Works offline and is bilingual (English / German).
+
 
 > 👩‍🏫 **For teachers:** generate a **print-ready worksheet with a separate answer key in one click** — pick grade, difficulty and question types, done. · *Für Lehrkräfte: druckfertiges Arbeitsblatt samt Lösungsblatt mit einem Klick – Jahrgang, Schwierigkeit und Aufgabentypen wählen, fertig.*
 
