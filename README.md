@@ -106,11 +106,6 @@ df_q = pd.json_normalize(rows, "questions",
         ["student", "date", "difficulty", "mode"])               # one row per question
 ```
 
-### Teacher options
-
-- **Start the class with identical settings:** the app reads URL parameters, e.g. `?mode=test&sf=gym&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. Build such a link by hand (or as a QR code) and hand it out — everyone starts the same.
-- **Exam mode:** add `&exam=1` to the link → settings are locked, hints and the solution are hidden, one attempt per question.
-- **Privacy (GDPR):** use initials / pseudonyms only; all entries stay locally in the browser and are not transmitted automatically.
 
 ### Getting started
 
@@ -185,12 +180,6 @@ df   = pd.json_normalize(rows)                                   # eine Zeile pr
 df_q = pd.json_normalize(rows, "questions",
         ["student", "date", "difficulty", "mode"])               # eine Zeile pro Aufgabe
 ```
-
-### Optionen für Lehrkräfte
-
-- **Klasse identisch starten:** die App liest URL-Parameter, z. B. `?mode=test&sf=gym&grade=g9&level=2&count=20&ask=V&unit=cm&class=8b&lang=de&exam=1`. So einen Link von Hand (oder als QR-Code) zusammenstellen und weitergeben – alle starten gleich.
-- **Prüfungsmodus:** `&exam=1` an den Link anhängen → Einstellungen gesperrt, Tipps und Lösung ausgeblendet, ein Versuch pro Aufgabe.
-- **Datenschutz (DSGVO):** nur Kürzel/Pseudonyme verwenden; alle Eingaben bleiben lokal im Browser und werden nicht automatisch übertragen.
 
 ### Loslegen
 
